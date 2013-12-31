@@ -5,7 +5,7 @@
     gem_bin_path: ~/.rvm/gems/$ruby/bin
     user: vagrant
   
-  sudo: yes
+  # sudo: yes
   
   tasks: 
     - name: Update apt cache
@@ -14,28 +14,34 @@
 
     - name: Update all packages
       apt: upgrade=dist
+      sudo: yes
  
     # curl required to download RVM     
     - name: install curl packages
       apt: pkg={{ item }} state=installed
       tags: [packages]
+      sudo: yes
       with_items:
         - curl
+        - libpq-dev
         
 
     # INSTALL RVM AND RUBY #
 
     - name: install RVM 
-      shell: \curl -L https://get.rvm.io | bash -s stable --autolibs=3 creates=~/.rvm
+      shell: \curl -L https://get.rvm.io | bash -s stable --autolibs=3 creates=/usr/local/rvm
       tags: [ruby]
+      sudo: yes
 
     - name: install Ruby 1.8.7 
-      shell: /usr/local/rvm/bin/rvm install ruby-1.8.7-p374 creates=~/.rvm/rubies/ruby-1.8.7-p374
+      shell: /usr/local/rvm/bin/rvm install ruby-1.8.7-p374 creates=/usr/local/rvm/rubies/ruby-1.8.7-p374
       tags: [ruby]
+      sudo: yes
 
     - name: install Ruby 1.9.3 (as default)
-      shell: /usr/local/rvm/bin/rvm install --default ruby-1.9.3-p484 creates=~/.rvm/rubies/ruby-1.9.3-p484
+      shell: /usr/local/rvm/bin/rvm install --default ruby-1.9.3-p484 creates=/usr/local/rvm/rubies/ruby-1.9.3-p484
       tags: [ruby]
+      sudo: yes
 
 
 #    - name: Create Ansible Cache Directory
