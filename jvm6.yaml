@@ -1,0 +1,127 @@
+---
+- hosts: vagrant
+  vars:
+    scala_version: 2.10.3
+    sbt_version: 0.13.0
+    thrift_version: 0.9.1
+  user: vagrant
+  sudo: yes # TODO: remove sudo off global default
+  tasks:
+    - name: Update apt cache
+      apt: update-cache=yes cache_valid_time=86400
+
+    - name: Update all packages
+      apt: upgrade=dist
+
+    - name: Create Ansible Cache Directory
+      file: path=/var/local/ansible-cache state=directory
+
+    # #########################################################################
+    # For Java support
+    # ->
+
+    - name: Install PyCurl (required for apt-repository updates)
+      apt: pkg=python-pycurl
+      tags:
+        - packages
+        - java
+
+    - name: Install Oracle Java Repo Installer Repository
+      apt_repository: repo=ppa:webupd8team/java update-cache=yes
+      tags: [java]
+
+    - name: Wizardry to bypass the Oracle License File prompt
+      shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+      tags: [java]
+
+    - name: Install Oracle Java 6
+      apt: pkg=oracle-java6-installer
+      tags: [java]
+
+    # #########################################################################
+    # For Scala support
+    # ->
+
+    - name: Download Scala {{scala_version}}
+      get_url: dest=/var/local/ansible-cache/ url=http://www.scala-lang.org/files/archive/scala-{{scala_version}}.tgz
+      tags: [scala]
+
+    - name: Extract Scala
+      shell: tar xzf /var/local/ansible-cache/scala-{{scala_version}}.tgz -C /usr/local/share creates=/usr/local/share/scala-{{scala_version}}
+      tags: [scala]
+
+    - name: Add Scala executable symlinks to path
+      shell: for f in fsc scala scalac scaladoc scalap; do ln -s /usr/local/share/scala-{{scala_version}}/bin/$f /usr/local/bin/$f; done; creates=/usr/local/bin/scala
+      tags: [scala]
+
+    - name: Update Scala environment variables
+      sudo: no
+      lineinfile: line="export SCALA_HOME=/usr/local/share/scala" dest="~/.bashrc" state=present regexp="export SCALA_HOME=/usr/local/share/scala"
+      tags: [scala]
+
+    # #########################################################################
+    # For SBT support
+    # ->
+
+    - name: Download SBT {{sbt_version}}
+      get_url: dest=/var/local/ansible-cache url=http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/{{sbt_version}}/sbt.tgz
+      tags: [sbt]
+
+    - name: Extract SBT
+      shell: tar xzf /var/local/ansible-cache/sbt.tgz -C /usr/local/share creates=/usr/local/share/sbt
+      tags: [sbt]
+
+    - name: Add SBT executable symlinks to path
+      shell: for f in sbt sbt-launch.jar; do ln -s /usr/local/share/sbt/bin/$f /usr/local/bin/$f; done; creates=/usr/local/bin/sbt
+      tags: [sbt]
+
+    # #########################################################################
+    # For Thrift support
+    # ->
+
+    - name: Ensure packages for building Thrift installed
+      apt: pkg={{ item }} state=installed
+      tags:
+        - packages
+        - thrift
+      with_items:
+        - curl
+        - vim
+        - make
+        - libboost-dev
+        - libboost-test-dev
+        - libboost-program-options-dev
+        - libevent-dev
+        - automake
+        - libtool
+        - flex
+        - bison
+        - pkg-config
+        - g++
+        - libssl-dev
+        - ant
+
+    - name: Ensure Thrift {{thrift_version}} source downloaded
+      get_url: dest=/var/local/ansible-cache/ url=http://download.nextag.com/apache/thrift/{{thrift_version}}/thrift-{{thrift_version}}.tar.gz
+      register: thrift_downloaded
+      tags: [thrift]
+
+    - name: Ensure Thrift extracted
+      shell: tar xzf /var/local/ansible-cache/thrift-{{thrift_version}}.tar.gz -C /usr/local/share creates=/usr/local/share/thrift-{{thrift_version}}
+      when: thrift_downloaded.changed
+      tags: [thrift]
+
+    - name: Ensure Thrift configured
+      shell: chdir=/usr/local/share/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no
+      when: thrift_downloaded.changed
+      tags: [thrift]
+
+    - name: Ensure Thrift make'd
+      shell: chdir=/usr/local/share/thrift-{{thrift_version}} make
+      when: thrift_downloaded.changed
+      tags: [thrift]
+
+    - name: Ensure Thrift installed
+      # Needs sudo
+      shell: chdir=/usr/local/share/thrift-{{thrift_version}} make install creates=/usr/local/bin/thrift
+      tags: [thrift]
