@@ -21,7 +21,6 @@
       with_items:
         - curl
         - vim
-        - git
         - libxslt-dev 
         - libxml2-dev
         - unzip   
