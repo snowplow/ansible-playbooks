@@ -1,0 +1,27 @@
+---
+- hosts: vagrant
+  
+  vars:
+    gem_bin_path: ~/.rvm/gems/$ruby/bin
+    user: vagrant
+  
+  sudo: yes
+  
+  tasks: 
+    - name: Update apt cache
+      apt: update-cache=yes cache_valid_time=86400
+      sudo: yes
+
+    - name: Update all packages
+      apt: upgrade=dist
+      
+    - name: install userspace packages
+      apt: pkg={{ item }} state=installed
+      tags: [packages]
+      with_items:
+        - postgresql-8.4
+        - postgresql-client-8.4
+        - libpq-dev
+        - postgresql-contrib-8.4
+        - libxslt-dev 
+        - libxml2-dev
