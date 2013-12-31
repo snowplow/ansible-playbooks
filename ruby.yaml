@@ -29,13 +29,14 @@
       shell: \curl -L https://get.rvm.io | bash -s stable --autolibs=3 creates=~/.rvm
       tags: [ruby]
 
+    - name: install Ruby 1.8.7 
+      shell: /usr/local/rvm/bin/rvm install ruby-1.8.7-p374 creates=~/.rvm/rubies/ruby-1.8.7-p374
+      tags: [ruby]
+
     - name: install Ruby 1.9.3 (as default)
       shell: /usr/local/rvm/bin/rvm install --default ruby-1.9.3-p484 creates=~/.rvm/rubies/ruby-1.9.3-p484
       tags: [ruby]
 
-    - name: install Ruby 1.8.7 
-      shell: /usr/local/rvm/bin/rvm install ruby-1.8.7-p374 creates=~/.rvm/rubies/ruby-1.8.7-p374
-      tags: [ruby]
 
 #    - name: Create Ansible Cache Directory
 #      file: path=/var/local/ansible-cache state=directory 
