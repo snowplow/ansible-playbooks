@@ -25,7 +25,7 @@
         - curl       
 
     # INSTALL RVM
-    - name: install RVM pt 1 - install files
+    - name: install RVM
       shell: curl -L https://get.rvm.io | bash -s stable --ruby creates=/home/vagrant/.rvm
       sudo: no
     

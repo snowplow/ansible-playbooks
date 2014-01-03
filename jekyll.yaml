@@ -8,11 +8,16 @@
   sudo: yes
   
   tasks: 
+    - name: install liquid (required by Jekyll)
+      shell: gem install liquid -v 2.3
+      
     - name: install jekyll
-      gem: name=jekyll state=latest
+      # gem: name=jekyll version=0.12.1 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
+      shell: gem install jekyll -v 0.12.1 
 
     - name: install jekyll-pagination
-      gem: name=jekyll-pagination
+      # gem: name=jekyll-pagination version=0.0.4 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
+      shell: gem install jekyll-pagination -v 0.0.4
 
     - name: install python-pygments
       apt: pkg={{ item }} state=installed
@@ -21,4 +26,5 @@
         - python-pygments    
 
     - name: install sass
-      gem: name=sass state=latest
+      # gem: name=sass version=3.2.5 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
+      shell: gem install sass -v 3.2.5
