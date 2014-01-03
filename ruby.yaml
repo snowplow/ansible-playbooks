@@ -17,32 +17,27 @@
       sudo: yes
  
     # curl required to download RVM     
-    - name: install curl packages
+    - name: Ensure curl is installed (used to download RVM)
       apt: pkg={{ item }} state=installed
       tags: [packages]
       sudo: yes
       with_items:
-        - curl
-        - libpq-dev
-        
+        - curl       
 
-    # INSTALL RVM AND RUBY #
-
-    - name: install RVM 
-      shell: \curl -L https://get.rvm.io | bash -s stable --autolibs=3 creates=/usr/local/rvm
-      tags: [ruby]
-      sudo: yes
-
-    - name: install Ruby 1.8.7 
-      shell: /usr/local/rvm/bin/rvm install ruby-1.8.7-p374 creates=/usr/local/rvm/rubies/ruby-1.8.7-p374
-      tags: [ruby]
-      sudo: yes
-
+    # INSTALL RVM
+    - name: install RVM pt 1 - install files
+      shell: curl -L https://get.rvm.io | bash -s stable --ruby creates=/home/vagrant/.rvm
+      sudo: no
+    
+    # INSTALL Ruby 1.9.3
     - name: install Ruby 1.9.3 (as default)
-      shell: /usr/local/rvm/bin/rvm install --default ruby-1.9.3-p484 creates=/usr/local/rvm/rubies/ruby-1.9.3-p484
+      shell: /home/vagrant/.rvm/bin/rvm install --default ruby-1.9.3-p484 creates=/usr/local/rvm/rubies/ruby-1.9.3-p484
       tags: [ruby]
       sudo: yes
 
+    # Print a useful warning
+    - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm
+      shell: echo "You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm'"
+      sudo: no
 
-#    - name: Create Ansible Cache Directory
-#      file: path=/var/local/ansible-cache state=directory 
+
