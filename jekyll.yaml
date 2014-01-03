@@ -8,21 +8,17 @@
   sudo: yes
   
   tasks: 
-  	- name: install jekyll
+    - name: install jekyll
       gem: name=jekyll state=latest
-      tags: [jekyll]
 
     - name: install jekyll-pagination
       gem: name=jekyll-pagination
-      tags: [jekyll] [jekyll_pagination]
 
     - name: install python-pygments
       apt: pkg={{ item }} state=installed
       tags: [packages]
       with_items:
         - python-pygments    
-      tags: [python] 
 
-    - name: Install SASS (syntactically awesome style sheets)
-      gem: sass state=latest
-      tags: [sass]
+    - name: install sass
+      gem: name=sass state=latest
