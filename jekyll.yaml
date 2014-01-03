@@ -13,7 +13,10 @@
       
     - name: install jekyll
       # gem: name=jekyll version=0.12.1 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
-      shell: gem install jekyll -v 0.12.1 
+      shell: gem install jekyll -v 0.12.1 --no-ri --no-rdoc
+
+    - name: set terminal encodings to be jekyll friendly (i.e. utf-8)
+      shell: echo -e "export LC_ALL=en_US.UTF-8 \nexport LANG=en_US.UTF-8" >> /home/vagrant/.bashrc
 
     - name: install jekyll-pagination
       # gem: name=jekyll-pagination version=0.0.4 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
