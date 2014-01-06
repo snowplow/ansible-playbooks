@@ -8,6 +8,7 @@
   sudo: yes
   
   tasks: 
+    # Note that we run gem install commands via the Shell rather than directly in Ansible because that seems to be necessary to play nicely with RVM
     - name: install liquid (required by Jekyll)
       shell: gem install liquid -v 2.4.1
 
