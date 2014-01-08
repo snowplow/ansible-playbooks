@@ -16,7 +16,7 @@
       sudo: yes 
 
     - name: download play framework
-      shell: wget http://downloads.typesafe.com/play/2.2.1/play-2.2.1.zip
+      shell: wget http://downloads.typesafe.com/play/2.2.1/play-2.2.1.zip creates=/home/vagrant/play-2.2.1.zip
       sudo: no
 
     - name: unzip play framework
@@ -24,4 +24,5 @@
       sudo: no
 
     - name: add play to path
+      shell: export PATH=$PATH:/home/vagrant/play-framework/play-2.2.1
 
