@@ -25,4 +25,5 @@
 
     - name: add play to path
       shell: export PATH=$PATH:/home/vagrant/play-framework/play-2.2.1
+      sudo: no
 
