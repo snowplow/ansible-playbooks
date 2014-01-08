@@ -1,0 +1,27 @@
+---
+- hosts: vagrant
+  
+  vars:
+    gem_bin_path: ~/.rvm/gems/$ruby/bin
+    user: vagrant
+  
+  # sudo: yes
+  
+  tasks: 
+    - name: install basic packages
+      apt: pkg={{ item }} state=installed
+      tags: [packages]
+      with_items:
+        - unzip
+      sudo: yes 
+
+    - name: download play framework
+      shell: wget http://downloads.typesafe.com/play/2.2.1/play-2.2.1.zip
+      sudo: no
+
+    - name: unzip play framework
+      shell: unzip -d /home/vagrant/play-framework play-2.2.1.zip creates=/home/vagrant/play-framework/play-2.2.1
+      sudo: no
+
+    - name: add play to path
+
