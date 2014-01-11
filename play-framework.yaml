@@ -1,12 +1,12 @@
 ---
 - hosts: vagrant
-  
+
   vars:
     gem_bin_path: ~/.rvm/gems/$ruby/bin
     user: vagrant
-  
+
   # sudo: yes
-  
+
   tasks: 
     - name: install basic packages
       apt: pkg={{ item }} state=installed

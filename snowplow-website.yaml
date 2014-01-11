@@ -1,12 +1,12 @@
 ---
 - hosts: vagrant
-  
+
   vars:
     gem_bin_path: ~/.rvm/gems/$ruby/bin
     user: vagrant
-  
+
   sudo: yes
-  
+
   tasks: 
     # Note that we run gem install commands via the Shell rather than directly in Ansible because that seems to be necessary to play nicely with RVM
     - name: install liquid (required by Jekyll)
@@ -18,7 +18,7 @@
     # Installing old version of Maruku as newer version fowls up Javascript by wrapping it in CDATA tag
     - name: install maruku (required by Jekyll)
       shell: gem install maruku -v 0.6.1
-      
+
     - name: install jekyll
       # gem: name=jekyll version=0.12.1 state=present    NOTE: The Ansible gem module does not appear to be compatible with RVM
       shell: gem install jekyll -v 0.12.1 --no-ri --no-rdoc
