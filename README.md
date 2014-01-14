@@ -6,7 +6,7 @@
 * Ruby
 * Postgres
 
-Used for configuring development and server environments.
+Used for configuring development and server environments at [Snowplow Analytics] [snowplow].
 
 ### Generic playbooks
 
@@ -44,7 +44,6 @@ limitations under the License.
 [ansible]: http://www.ansibleworks.com/
 
 [snowplow]: http://snowplowanalytics.com
-
 
 [generic-pb]: /snowplow/dev-environment/blob/master/generic
 [vendor-pb]: /snowplow/dev-environment/blob/master/vendor
