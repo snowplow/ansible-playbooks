@@ -10,7 +10,7 @@ Used for configuring development and server environments.
 
 ### Generic playbooks
 
-The [`/playbooks/generic`] [generic-pb] folder contains the available playbooks:
+The [`/generic`] [generic-pb] folder contains the available playbooks:
 
 | Category   | Name                                | Description                                                                      | Dependencies |
 |:-----------|:------------------------------------|:---------------------------------------------------------------------------------|:-------------|
@@ -22,7 +22,7 @@ The [`/playbooks/generic`] [generic-pb] folder contains the available playbooks:
 
 ### Vendor playbooks
 
-The [`/playbooks/vendor`] [vendor-pb] folder contains the available playbooks:
+The [`/vendor`] [vendor-pb] folder contains the available playbooks:
 
 | Vendor                  | Name                                                  | Description                                                  | Dependencies |
 |:------------------------|:------------------------------------------------------|:-------------------------------------------------------------|:-------------|
@@ -46,15 +46,15 @@ limitations under the License.
 [snowplow]: http://snowplowanalytics.com
 
 
-[generic-pb]: /snowplow/dev-environment/blob/master/playbooks/generic
-[vendor-pb]: /snowplow/dev-environment/blob/master/playbooks/vendor
+[generic-pb]: /snowplow/dev-environment/blob/master/generic
+[vendor-pb]: /snowplow/dev-environment/blob/master/vendor
 
-[base-pb]: /snowplow/dev-environment/blob/master/playbooks/generic/base.yaml
-[jvm6-pb]: /snowplow/dev-environment/blob/master/playbooks/generic/jvm/jvm-6.yaml
-[play-2-pb]: /snowplow/dev-environment/blob/master/playbooks/generic/jvm/play-2.yaml
-[postgres-8.4-pb]: /snowplow/dev-environment/blob/master/playbooks/generic/db/postgres-8.4.yaml
-[ruby-rvm-pb]: /snowplow/dev-environment/blob/master/playbooks/generic/ruby/ruby-rvm.yaml
+[base-pb]: /snowplow/dev-environment/blob/master/generic/base.yaml
+[jvm6-pb]: /snowplow/dev-environment/blob/master/generic/jvm/jvm-6.yaml
+[play-2-pb]: /snowplow/dev-environment/blob/master/generic/jvm/play-2.yaml
+[postgres-8.4-pb]: /snowplow/dev-environment/blob/master/generic/db/postgres-8.4.yaml
+[ruby-rvm-pb]: /snowplow/dev-environment/blob/master/generic/ruby/ruby-rvm.yaml
 
-[snowplow.github.com-pb]: /snowplow/dev-environment/blob/master/playbooks/vendor/com.snowplowanalytics/snowplow.github.com.yaml
+[snowplow.github.com-pb]: /snowplow/dev-environment/blob/master/vendor/com.snowplowanalytics/snowplow.github.com.yaml
 
 [license]: http://www.apache.org/licenses/LICENSE-2.0
