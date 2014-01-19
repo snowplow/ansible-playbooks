@@ -1,0 +1,23 @@
+---
+- hosts: vagrant
+  vars:
+    yuic_url: https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.2.zip
+    yuic_version: 2.4.2
+  user: vagrant
+  sudo: yes # TODO: remove sudo off global default
+
+  tasks:
+
+    - name: Ensure unzip is installed
+      apt: pkg={{ item }} state=installed
+      tags: [yuic]
+      with_items:
+        - unzip   
+
+    - name: Ensure YUI Compressor is downloaded
+      get_url: dest=/var/local/ansible-cache/ url={{ yuic_url }}
+      tags: [yuic]
+
+    - name: Ensure YUI Compressor is extracted 
+      shell: unzip /var/local/ansible-cache/yuicompressor-{{ yuic_version }}.zip -d /usr/local/share creates=/usr/local/share/yuic-{{ yuic_version }}
+      tags: [yuic]
