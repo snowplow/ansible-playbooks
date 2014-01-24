@@ -18,7 +18,7 @@
         - { name: 'kramdown', version: '0.13.8' }
         # Old version of Maruku as newer version fowls up JavaScript by wrapping it in CDATA tag
         - { name: 'maruku', version: '0.6.1' }
-        - { name: 'saas', version: '3.2.5' }
+        - { name: 'sass', version: '3.2.5' }
 
     - name: Ensure python-pygments is installed
       apt: pkg=python-pygments state=installed
