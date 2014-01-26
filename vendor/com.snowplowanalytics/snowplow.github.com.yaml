@@ -8,31 +8,35 @@
   sudo: no
 
   tasks: 
-    # Note that we run gem install commands via the Shell rather than directly in
-    # Ansible because that seems to be necessary to play nicely with RVM
-
-    - name: Ensure Jekyll's gem dependencies are installed
-      shell: gem install {{ item.name }} -v {{ item.version }}
-      with_items:
-        - { name: 'liquid', version: '2.4.1' }
-        - { name: 'kramdown', version: '0.13.8' }
-        # Old version of Maruku as newer version fowls up JavaScript by wrapping it in CDATA tag
-        - { name: 'maruku', version: '0.6.1' }
-        - { name: 'sass', version: '3.2.5' }
 
     - name: Ensure python-pygments is installed
       apt: pkg=python-pygments state=installed
       sudo: yes
 
-    - name: Ensure Jekyll is installed
-      shell: gem install jekyll -v 0.12.1 --no-ri --no-rdoc
+    # Note that we run gem install commands via the shell rather than using the
+    # Ansible gem module, in order to play nicely with RVM
 
-    - name: Ensure jekyll-pagination is installed
-      shell: gem install jekyll-pagination -v 0.0.4
+    - name: Ensure Jekyll's gem dependencies are installed
+      shell: gem install {{ item.name }} -v {{ item.version }} {{ item.flags }}
+      with_items:
+        - { name: 'liquid',            version: '2.4.1',  flags: '' }
+        - { name: 'kramdown',          version: '0.13.8', flags: '' }
+        # Old version of Maruku as newer version fowls up JavaScript by wrapping it in CDATA tag
+        - { name: 'maruku',            version: '0.6.1',  flags: '' }
+        - { name: 'sass',              version: '3.2.5',  flags: '' }
+        - { name: 'jekyll',            version: '0.12.1', flags: '--no-ri --no-rdoc' }
+        - { name: 'jekyll-pagination', version: '0.0.4',  flags: '' }
 
-    # TODO: this is non-idempotent. Must be a cleaner way
     - name: Ensure terminal encodings are Jekyll friendly (i.e. utf-8)
-      shell: echo "export {{ item }}=en_US.UTF-8" >> /home/vagrant/.bashrc
+      lineinfile: dest=~/.pam_environment
+                  regexp='^{{ item }}='
+                  line='{{ item }}=en_US.UTF-8'
+                  state=present
+                  create=True
       with_items:
         - LC_ALL
         - LANG
+
+    # Print a useful warning
+    - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use Jekyll
+      shell: echo "-"
