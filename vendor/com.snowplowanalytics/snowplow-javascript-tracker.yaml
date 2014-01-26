@@ -22,7 +22,7 @@
       shell: unzip /var/local/ansible-cache/yuicompressor-{{ yuic_version }}.zip -d /usr/local/share creates=/usr/local/share/yuic-{{ yuic_version }}
       tags: [yuic]
 
-    - name: Ensure YUI Compressor path is exported in environment
+    - name: Ensure YUI_COMPRESSOR_PATH is exported
       lineinfile: dest=~/.pam_environment
                   regexp='YUI_COMPRESSOR_PATH=/usr/local/share/yuic-{{ yuic_version }}'
                   line='YUI_COMPRESSOR_PATH=/usr/local/share/yuic-{{ yuic_version }}'
