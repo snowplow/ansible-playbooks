@@ -30,3 +30,4 @@
                   regexp='^YUI_COMPRESSOR_PATH'
                   line='YUI_COMPRESSOR_PATH=/usr/local/share/{{ yuic_name }}'
                   state=present
+      tags: [yuic]
