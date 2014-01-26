@@ -1,29 +1,32 @@
 ---
 - hosts: vagrant
   vars:
-    yuic_url: https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.2.zip
-    yuic_version: 2.4.2
+    yuic_url: https://github.com/downloads/yui/yuicompressor
+    yuic_name: yuicompressor-2.4.2
   user: vagrant
-  sudo: yes # TODO: remove sudo off global default
+  sudo: yes # Because YUI Compressor is installed system-wide
+
+  # TODO: we need to add jvm-x.yaml as a dependency, because we need Java to run the YUI Compressor
+  # In the meantime, run a jvm playbook manually:
+  #
+  # ansible-playbook /vagrant/ansible-playbooks/generic/jvm/jvm-6.yaml --inventory-file=/home/vagrant/ansible_hosts --connection=local
 
   tasks:
 
     - name: Ensure unzip is installed
-      apt: pkg={{ item }} state=installed
+      apt: pkg=unzip state=installed
       tags: [yuic]
-      with_items:
-        - unzip   
 
     - name: Ensure YUI Compressor is downloaded
-      get_url: dest=/var/local/ansible-cache/ url={{ yuic_url }}
+      get_url: dest=/var/local/ansible-cache/ url={{ yuic_url }}/{{ yuic_name }}.zip
       tags: [yuic]
 
     - name: Ensure YUI Compressor is extracted 
-      shell: unzip /var/local/ansible-cache/yuicompressor-{{ yuic_version }}.zip -d /usr/local/share creates=/usr/local/share/yuic-{{ yuic_version }}
+      shell: unzip -o /var/local/ansible-cache/{{ yuic_name }}.zip -d /usr/local/share creates=/usr/local/share/{{ yuic_name }}
       tags: [yuic]
 
     - name: Ensure YUI_COMPRESSOR_PATH is exported
-      lineinfile: dest=~/.pam_environment
-                  regexp='YUI_COMPRESSOR_PATH=/usr/local/share/yuic-{{ yuic_version }}'
-                  line='YUI_COMPRESSOR_PATH=/usr/local/share/yuic-{{ yuic_version }}'
+      lineinfile: dest=/etc/environment
+                  regexp='^YUI_COMPRESSOR_PATH'
+                  line='YUI_COMPRESSOR_PATH=/usr/local/share/{{ yuic_name }}'
                   state=present
