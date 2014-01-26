@@ -18,11 +18,11 @@
       tags: [yuic]
 
     - name: Ensure YUI Compressor is downloaded
-      get_url: dest=/var/local/ansible-cache/ url={{ yuic_url }}/{{ yuic_name }}.zip
+      get_url: dest=/tmp/ url={{ yuic_url }}/{{ yuic_name }}.zip
       tags: [yuic]
 
     - name: Ensure YUI Compressor is extracted 
-      shell: unzip -o /var/local/ansible-cache/{{ yuic_name }}.zip -d /usr/local/share creates=/usr/local/share/{{ yuic_name }}
+      shell: unzip -o /tmp/{{ yuic_name }}.zip -d /usr/local/share creates=/usr/local/share/{{ yuic_name }}
       tags: [yuic]
 
     - name: Ensure YUI_COMPRESSOR_PATH is exported
