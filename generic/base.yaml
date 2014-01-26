@@ -23,4 +23,10 @@
         - vim
         - libxslt-dev 
         - libxml2-dev
-        - unzip   
+        - unzip
+        
+    - name: Ensure .bashrc is loaded from .bash_profile
+      lineinfile: dest=~/.bash_profile
+                  regexp='if [ -f ~/.bashrc ]; then . ~/.bashrc ; fi'
+                  line='if [ -f ~/.bashrc ]; then . ~/.bashrc ; fi'
+                  state=present
