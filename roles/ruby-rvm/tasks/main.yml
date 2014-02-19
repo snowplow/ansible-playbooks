@@ -1,0 +1,27 @@
+---
+
+# curl required to download RVM     
+- name: Ensure curl is installed (used to download RVM)
+  apt: pkg={{ item }} state=installed
+  tags: [packages]
+  sudo: yes
+  with_items:
+    - curl       
+
+# INSTALL RVM
+- name: Ensure RVM is installed
+  shell: curl -L https://get.rvm.io | bash -s stable --ruby creates=/home/vagrant/.rvm
+
+# INSTALL Ruby 1.9.3
+- name: Ensure Ruby 1.9.3 is installed as default
+  shell: /home/vagrant/.rvm/bin/rvm install --default ruby-1.9.3-p484 creates=/usr/local/rvm/rubies/ruby-1.9.3-p484
+  tags: [ruby]
+
+# Launch RVM
+- name: Launch RVM (otherwise only launched when the shell is rebooted)
+  shell: . /home/vagrant/.rvm/scripts/rvm
+
+
+# Print a useful warning
+# - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm
+#   shell: echo "You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm'"
