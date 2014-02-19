@@ -19,23 +19,7 @@
     - name: Ensure Jekyll's gem dependencies are installed
       shell: gem install {{ item.name }} -v {{ item.version }} {{ item.flags }}
       with_items:
-        - { name: 'liquid',            version: '2.4.1',  flags: '' }
-        - { name: 'kramdown',          version: '0.13.8', flags: '' }
-        # Old version of Maruku as newer version fowls up JavaScript by wrapping it in CDATA tag
-        - { name: 'maruku',            version: '0.6.1',  flags: '' }
-        - { name: 'sass',              version: '3.2.5',  flags: '' }
-        - { name: 'jekyll',            version: '0.12.1', flags: '--no-ri --no-rdoc' }
-        - { name: 'jekyll-pagination', version: '0.0.4',  flags: '' }
-
-    - name: Ensure terminal encodings are Jekyll friendly (i.e. utf-8)
-      lineinfile: dest=~/.pam_environment
-                  regexp='^{{ item }}='
-                  line='{{ item }}=en_US.UTF-8'
-                  state=present
-                  create=True
-      with_items:
-        - LC_ALL
-        - LANG
+        - { name: 'jekyll',            version: '1.4.3', flags: '--no-ri --no-rdoc' }
 
     # Print a useful warning
     - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use Jekyll
