@@ -17,11 +17,13 @@
   shell: /home/vagrant/.rvm/bin/rvm install --default ruby-1.9.3-p484 creates=/usr/local/rvm/rubies/ruby-1.9.3-p484
   tags: [ruby]
 
-# Launch RVM
+# Launch RVM. Note that when testing, this doesn't have the desired effect. 
+# (I.e. user still needs to exit the shell and re-enter before RVM is available.) 
+# Hence the warning in the next step
 - name: Launch RVM (otherwise only launched when the shell is rebooted)
   shell: . /home/vagrant/.rvm/scripts/rvm
 
 
 # Print a useful warning
-# - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm
-#   shell: echo "You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run 'source /home/vagrant/.rvm/scripts/rvm'"
+- name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run '. /home/vagrant/.rvm/scripts/rvm
+  shell: echo "You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run '. /home/vagrant/.rvm/scripts/rvm'"
