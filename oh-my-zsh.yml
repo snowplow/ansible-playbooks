@@ -1,5 +1,4 @@
 ---
----
 - name: install zsh packages
   sudo: yes
   apt: pkg={{ item }} state=installed
@@ -17,5 +16,9 @@
   command: cp /home/vagrant/.oh-my-zsh/templates/zshrc.zsh-template /home/vagrant/.zshrc 
 
 # Following command doesn't work, because it requires a password from the user...
-- name: Set ZSH as default shell
-  command: chsh vagrant -s /bin/zsh
+# - name: Set ZSH as default shell
+#   command: chsh vagrant -s /bin/zsh
+
+- name: Set zsh as default shell
+  user: name=vagrant shell=/usr/bin/zsh
+  sudo: yes 
