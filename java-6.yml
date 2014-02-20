@@ -1,6 +1,5 @@
 ---
  - hosts: vagrant
    remote_user: vagrant
-   roles:
-   - base 
+   roles: 
    - { role: oracle-java, oracle_java_version: 6 }
