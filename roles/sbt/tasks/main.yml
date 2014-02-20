@@ -1,0 +1,15 @@
+---
+- name: Download SBT {{sbt_version}}
+  get_url: dest=/var/local/ansible-cache url=http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/{{sbt_version}}/sbt.tgz
+  sudo: yes
+  tags: [sbt]
+
+- name: Extract SBT
+  shell: tar xzf /var/local/ansible-cache/sbt.tgz -C /usr/local/share creates=/usr/local/share/sbt
+  sudo: yes
+  tags: [sbt]
+
+- name: Add SBT executable symlinks to path
+  shell: for f in sbt sbt-launch.jar; do ln -s /usr/local/share/sbt/bin/$f /usr/local/bin/$f; done; creates=/usr/local/bin/sbt
+  sudo: yes
+  tags: [sbt]
