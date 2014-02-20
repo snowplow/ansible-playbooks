@@ -6,17 +6,19 @@
   with_items:
     - zsh
     - zsh-doc
+    - curl
 
-- name: Pipe oh-my-zsh installation script into zsh
+- name: Clone oh-my-zsh repo
+  git: repo=git://github.com/robbyrussell/oh-my-zsh.git
+       dest=/home/vagrant/.oh-my-zsh
+
+- name: Create a new zsh config from the template in the repo
+  command: cp /home/vagrant/.oh-my-zsh/templates/zshrc.zsh-template /home/vagrant/.zshrc
+
+# Following command doesn't work, because it requires a password from the user...
+# - name: Set ZSH as default shell
+#   command: chsh vagrant -s /bin/zsh
+
+- name: Set zsh as default shell
+  user: name=vagrant shell=/usr/bin/zsh
   sudo: yes
-  shell: wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh creates=/home/vagrant/.oh-my-zsh
-
-- name: 'You now need to change shells by executing "chsh -s `which zsh`" at the command line, entering the vagrant password and then exiting / starting a new shell session'
-  shell: chsh -s `which zsh`
-
-# - name: Change shell
-#   shell: chsh -s `which zsh`
-
-# Print a helpful message
-# - name: You will need to exit the terminal and then start a new terminal session before oh-my-zsh is live
-#   command: echo "You will need to exit the terminal and then start a new terminal session before oh-my-zsh is live"
