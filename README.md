@@ -6,27 +6,30 @@
 * Ruby
 * Postgres
 
-Used for configuring development and server environments at [Snowplow Analytics] [snowplow].
+Currently these are all used to configure Vagrant VMs (specifically [dev-environment] (https://github.com/snowplow/dev-environment)) to hack on specific parts of the Snowplow stack. Going forwards, we plan to extend the playbooks to also manage server environments at [Snowplow Analytics] [snowplow].
 
-### Generic playbooks
+We have tried to write each playbook in a generic way, so that this may be a useful resource if you want to set up similar development environments that are not related to Snowplow specifically.
 
-The [`/generic`] [generic-pb] folder contains the available playbooks:
+### Repo structure
 
-| Category   | Name                                | Description                                                                      | Dependencies |
-|:-----------|:------------------------------------|:---------------------------------------------------------------------------------|:-------------|
-| -          | [`base.yaml`] [base-pb]             | Installs basic utilities that are useful on the dev box e.g. Git, Vim etc.       | None         |
-| `jvm`      | [`jvm-6.yaml`] [jvm6-pb]            | <ul><li>Oracle Java 1.6 (1.6 not v1.7, for Amazon EMR compat)</li><li>Scala 2.10.3</li><li>SBT 0.13.0</li><li>Thrift 0.9.1</li></ul> | None         |
-| `jvm`      | [`play-2.yaml`] [play-2-pb]         | Installs the Play 2 Framework                                                    | `jvm-6.yaml` |
-| `db`       | [`postgres-8.4.yaml`] [postgres-8.4-pb] | Installs Postgres 8.4. (8.4 not 9, for Amazon Redshift compat)         | None         |
-| `ruby`     | [`ruby-rvm.yaml`][ruby-rvm-pb]      | Installs RVM, Ruby version to 1.9.3 and sets default Ruby to 1.9.3               | None         |
+Plays to install individual bundles of software e.g. Ruby / RVM, Java, Scala, SBT, Thrift, NodeJS etc. have each been bundled into separate [roles] (https://github.com/snowplow/ansible-playbooks/tree/master/roles).
 
-### Vendor playbooks
+Those roles are then combined into larger playbooks that are saved in the project root directory. For example, the [snowplow-batch-pipeline.yml] (https://github.com/snowplow/ansible-playbooks/blob/master/snowplow-batch-pipeline.yml) runs the base, Java, Scala, SBT and Ruby / RVM roles required to enable development on the Snowplow Hadoop-based data pipeline.
 
-The [`/vendor`] [vendor-pb] folder contains the available playbooks:
+This structure makes it simple to compose new playbooks out of the roles. For example, to create a playbook that installs Ruby / RVM and PostgreSQL, we'd create a new playbook file e.g. `ruby-postgres.yml` with the following contents:
 
-| Vendor                  | Name                                                  | Description                                                  | Dependencies |
-|:------------------------|:------------------------------------------------------|:-------------------------------------------------------------|:-------------|
-| `com.snowplowanalytics` | [`snowplow.github.com.yaml`] [snowplow.github.com-pb] | Ruby, Jekyll & Pygments for the Snowplow website's front-end | `ruby`       |
+```
+---
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - base
+    - ruby-rvm
+    - postgres-8.4
+```
+
+For more information on roles in Ansible playbooks, consult the [Ansible documentation] [ansible-roles-documentation]
+
 
 ## Copyright and license
 
@@ -42,18 +45,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 [ansible]: http://www.ansibleworks.com/
-
+[ansible-roles-documentation]: http://docs.ansible.com/playbooks_roles.html
 [snowplow]: http://snowplowanalytics.com
 
-[generic-pb]: /snowplow/dev-environment/blob/master/generic
-[vendor-pb]: /snowplow/dev-environment/blob/master/vendor
-
-[base-pb]: /snowplow/dev-environment/blob/master/generic/base.yaml
-[jvm6-pb]: /snowplow/dev-environment/blob/master/generic/jvm/jvm-6.yaml
-[play-2-pb]: /snowplow/dev-environment/blob/master/generic/jvm/play-2.yaml
-[postgres-8.4-pb]: /snowplow/dev-environment/blob/master/generic/db/postgres-8.4.yaml
-[ruby-rvm-pb]: /snowplow/dev-environment/blob/master/generic/ruby/ruby-rvm.yaml
-
-[snowplow.github.com-pb]: /snowplow/dev-environment/blob/master/vendor/com.snowplowanalytics/snowplow.github.com.yaml
 
 [license]: http://www.apache.org/licenses/LICENSE-2.0
