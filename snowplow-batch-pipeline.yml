@@ -2,7 +2,6 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - { role: oracle-java, oracle_java_version: 6 }
-   - scala
+   - { role: scala, oracle_java_version: 6 }
    - sbt
    - ruby-rvm
