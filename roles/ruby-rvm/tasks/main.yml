@@ -17,11 +17,15 @@
   shell: '/home/vagrant/.rvm/bin/rvm install --default {{ default_ruby_version }} creates=/usr/local/rvm/rubies/{{ default_ruby_version }}'
   tags: [ruby]
 
-# Launch RVM. Note that when testing, this doesn't have the desired effect. 
-# (I.e. user still needs to exit the shell and re-enter before RVM is available.) 
-# Hence the warning in the next stepru
-- name: Launch RVM (otherwise only launched when the shell is rebooted)
-  shell: 'executable=/home/vagrant/.rvm/scripts/rvm && rvm use --default {{ default_ruby_version }} && bundle'
+# The purpose of the following command is to start RVM so that we can install gems through it immediately. 
+# This should make it possible to compose a playbook where this task list is followed immediately by a list of gems to install
+# Unfortunately, this doesn't appear to be working i.e. at the moment, if you want to run such a playbook
+# it will error when run the first time on the first gem installation. If you then exit the terminal and start a new
+# terminal session, then rerun the playbook, it will work. 
+# For more information on having to restart the terminal following RVM installation, see http://rvm.io/rvm/install esp.
+# section on 'Reload shell configuration & test'
+- name: Start RVM (otherwise only launched when the shell is rebooted)
+  shell: executable=/bin/bash source /home/vagrant/.rvm/bin/rvm
 
 
 # Print a useful warning
