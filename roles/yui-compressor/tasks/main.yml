@@ -1,0 +1,23 @@
+---
+- name: Ensure unzip is installed
+  sudo: yes
+  apt: pkg=unzip state=installed
+  tags: [yuic]
+
+- name: Ensure YUI Compressor is downloaded
+  sudo: yes
+  get_url: dest=/tmp/ url={{ yuic_url }}/{{ yuic_name }}.zip
+  tags: [yuic]
+
+- name: Ensure YUI Compressor is extracted 
+  sudo: yes
+  shell: unzip -o /tmp/{{ yuic_name }}.zip -d /usr/local/share creates=/usr/local/share/{{ yuic_name }}
+  tags: [yuic]
+
+- name: Ensure YUI_COMPRESSOR_PATH is exported
+  sudo: yes
+  lineinfile: dest=/etc/environment
+              regexp='^YUI_COMPRESSOR_PATH'
+              line='YUI_COMPRESSOR_PATH=/usr/local/share/{{ yuic_name }}'
+              state=present
+  tags: [yuic]

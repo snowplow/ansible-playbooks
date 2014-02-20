@@ -1,0 +1,7 @@
+---
+ - hosts: vagrant
+   remote_user: vagrant
+   roles:
+   - base
+   - ruby-rvm
+   - jekyll

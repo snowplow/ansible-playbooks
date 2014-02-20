@@ -1,0 +1,6 @@
+---
+ - hosts: vagrant
+   remote_user: vagrant
+   roles:
+   - base
+   - postgres-8.4
