@@ -1,24 +1,5 @@
 ---
-- name: install zsh packages
-  sudo: yes
-  apt: pkg={{ item }} state=installed
-  tags: [packages]
-  with_items:
-    - zsh
-    - zsh-doc
-    - curl
-
-- name: Clone oh-my-zsh repo
-  git: repo=git://github.com/robbyrussell/oh-my-zsh.git 
-       dest=/home/vagrant/.oh-my-zsh
-
-- name: Create a new zsh config from the template in the repo
-  command: cp /home/vagrant/.oh-my-zsh/templates/zshrc.zsh-template /home/vagrant/.zshrc 
-
-# Following command doesn't work, because it requires a password from the user...
-# - name: Set ZSH as default shell
-#   command: chsh vagrant -s /bin/zsh
-
-- name: Set zsh as default shell
-  user: name=vagrant shell=/usr/bin/zsh
-  sudo: yes 
+ - hosts: vagrant
+   remote_user: vagrant
+   roles:
+   - oh-my-zsh
