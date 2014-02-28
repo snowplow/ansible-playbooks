@@ -1,3 +1,4 @@
 ---
 - name: Install Boto Python package via Pip
   pip: name=boto
+  sudo: yes
