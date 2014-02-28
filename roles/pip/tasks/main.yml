@@ -1,7 +1,0 @@
----
-- name: Download latest version of pip from Github
-  command: chdir=/var/local/ansible-cache curl -0 https://raw.github.com/pypa/pip/master/contrib/get-pip.py creates=/var/local/ansible-cache/get-pip.py
-
-- name: Run the pip setup script
-  command: python /var/local/ansible-cache/get-pip.py
-  sudo: yes

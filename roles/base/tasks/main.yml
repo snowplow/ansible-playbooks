@@ -9,7 +9,7 @@
       
     - name: install basic packages
       sudo: yes
-      apt: pkg={{ item }} state=installed
+      apt: pkg={{ item }} state=latest
       tags: [packages]
       with_items:
         - curl
@@ -17,3 +17,4 @@
         - libxslt-dev 
         - libxml2-dev
         - unzip
+        - python-pip
