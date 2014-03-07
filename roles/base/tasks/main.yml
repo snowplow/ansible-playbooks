@@ -18,3 +18,4 @@
         - libxml2-dev
         - unzip
         - python-pip
+        - python-psycopg2
