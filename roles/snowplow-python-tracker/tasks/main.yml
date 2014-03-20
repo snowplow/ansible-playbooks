@@ -1,4 +1,6 @@
 ---
+
+# First download Python 3.3
 - name: Install dependencies required to setup a new version of Python
   sudo: yes
   apt: pkg={{ item }} state=latest
@@ -11,11 +13,17 @@
     - bzip2
     - libbz2-dev
 
+- name: Ensure ansible-cache directory exists
+  shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+  sudo: yes
+
 - name: Download Python 3.3
-  get_url: dest=/home/vagrant/ansible-cache/ url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz
+  get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz 
+  sudo: yes
 
 - name: Ensure Python 3.3 is extracted
-  shell: tar /home/vagrant/ansible-cache/Python-3.3.5.tar.xz ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
+  shell: chdir=/var/local/ansible-cache tar xJf ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
+  sudo: yes
 
 - name: Ensure Python 3.3 is configured
   shell: chdir=/opt/Python-3.3.5 ./configure --prefix=/opt/python3.3
@@ -24,14 +32,25 @@
   shell: chdir=/opt/Python-3.3.5 make
 
 - name: Ensure Python 3.3 installed
-  shell: chdir=/opt/Python-3.3.5 make install
+  shell: chdir=/opt/Python-3.3.5 make install  # Need to add a 'creates=' flag here
   sudo: yes
 
+# Now download the Snowplow Python Tracker from Git
+- name: Clone Snowplow-Python-Tracker
+  git: repo=https://github.com/snowplow/snowplow-python-tracker.git dest=/vagrant/
+
+# Setup a virtualenv to run the tracker
+- name: Setup the virtualenv using Python 3.3
+  shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-tracker/env
+
 - name: Install packages required by Python by Snowplow-Python-Tracker
-  sudo: yes
-  pip: name={{ item }} executable=pip-3.3
+  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-tracker/env"
   with_items: 
     - python-dateutil
     - httmock
     - freezegun
-  
+
+- name: Install the packages specified in requirements.txt
+  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-tracker/env
+
+
