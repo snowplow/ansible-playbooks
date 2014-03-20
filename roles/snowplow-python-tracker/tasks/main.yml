@@ -44,13 +44,13 @@
   shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-tracker-environment
 
 - name: Install packages required by Python by Snowplow-Python-Tracker
-  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-tracker/environment"
+  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-tracker-environment"
   with_items: 
     - python-dateutil
     - httmock
     - freezegun
 
 - name: Install the packages specified in requirements.txt
-  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-tracker/environment
+  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-tracker-environment
 
 
