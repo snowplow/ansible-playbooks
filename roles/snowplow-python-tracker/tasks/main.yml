@@ -4,7 +4,7 @@
   apt: pkg={{ item }} state=latest
   tags: [packages]
   with_items:
-    - build-essentials
+    - build-essential
     - libsqlite3-dev
     - sqlite3 # for the command line client
     - libxml2-dev
