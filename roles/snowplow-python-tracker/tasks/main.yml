@@ -1,0 +1,37 @@
+---
+- name: Install dependencies required to setup a new version of Python
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  tags: [packages]
+  with_items:
+    - build-essentials
+    - libsqlite3-dev
+    - sqlite3 # for the command line client
+    - libxml2-dev
+    - bzip2
+    - libbz2-dev
+
+- name: Download Python 3.3
+  get_url: dest=/var/local/ansible-cache/ url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz
+
+- name: Ensure Python 3.3 is extracted
+  shell: tar /var/local/ansible-cache/Python-3.3.5.tar.xz ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
+
+- name: Ensure Python 3.3 is configured
+  shell: chdir=/opt/Python-3.3.5 ./configure --prefix=/opt/python3.3
+
+- name: Ensure Python 3.3 make'd
+  shell: chdir=/opt/Python-3.3.5 make
+
+- name: Ensure Python 3.3 installed
+  shell: chdir=/opt/Python-3.3.5 make install
+  sudo: yes
+
+- name: Install packages required by Python by Snowplow-Python-Tracker
+  sudo: yes
+  pip: name={{ item }} executable=pip-3.3
+  with_items: 
+    - python-dateutil
+    - httmock
+    - freezegun
+  
