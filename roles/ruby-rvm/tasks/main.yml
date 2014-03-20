@@ -1,12 +1,13 @@
 ---
 
-# curl required to download RVM     
+# curl required to download RVM. libpz-dev is required as well according to Alex: https://github.com/snowplow/ansible-playbooks/issues/22
 - name: Ensure curl is installed (used to download RVM)
   apt: pkg={{ item }} state=installed
   tags: [packages]
   sudo: yes
   with_items:
-    - curl       
+    - curl
+    - libpq-dev
 
 # INSTALL RVM
 - name: Ensure RVM is installed
