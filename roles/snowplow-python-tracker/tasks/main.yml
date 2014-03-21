@@ -49,6 +49,7 @@
     - python-dateutil
     - httmock
     - freezegun
+    - pytest
 
 - name: Install the packages specified in requirements.txt
   pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-tracker-environment
