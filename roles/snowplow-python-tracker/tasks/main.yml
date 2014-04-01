@@ -1,6 +1,5 @@
 ---
 
-# First download Python 3.3
 - name: Install dependencies required to setup a new version of Python
   sudo: yes
   apt: pkg={{ item }} state=latest
@@ -17,6 +16,7 @@
   shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
   sudo: yes
 
+# Install Pyton 3.3
 - name: Download Python 3.3
   get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz 
   sudo: yes
@@ -35,6 +35,25 @@
   shell: chdir=/opt/Python-3.3.5 make install  # Need to add a 'creates=' flag here
   sudo: yes
 
+# Install Python 2.7
+- name: Download Python 2.7
+  get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/2.7.6/Python-2.7.6.tar.xz 
+  sudo: yes
+
+- name: Ensure Python 2.7 is extracted
+  shell: chdir=/var/local/ansible-cache tar xJf ./Python-2.7.6.tar.xz -C /opt creates=/opt/Python-2.7.6
+  sudo: yes
+
+- name: Ensure Python 2.7 is configured
+  shell: chdir=/opt/Python-2.7.6 ./configure --prefix=/opt/python2.7
+
+- name: Ensure Python 2.7 make'd
+  shell: chdir=/opt/Python-2.7.6 make
+
+- name: Ensure Python 2.7 installed
+  shell: chdir=/opt/Python-2.7.6 make install  # Need to add a 'creates=' flag here
+  sudo: yes
+
 # Now download the Snowplow Python Tracker from Git
 - name: Add Github to the list of known hosts so that we can clone the repo via SSH
   shell: ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts 
@@ -46,11 +65,11 @@
 - name: Clone snowplow-python-tracker repo into the VM
   git: repo=https://github.com/snowplow/snowplow-python-tracker.git dest=/vagrant/snowplow-python-tracker
 
-# Setup a virtualenv to run the tracker
+# Setup a Python 3.3 virtual environment to run the tracker
 - name: Setup a environment for the tracker using Python 3.3
   shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-3.3-tracker-environment
 
-- name: Install packages required by Python by Snowplow-Python-Tracker
+- name: Install packages required for the Python Tracker in the Python 3.3 environment
   pip: name={{ item }} virtualenv="/vagrant/snowplow-python-3.3-tracker-environment"
   with_items: 
     - python-dateutil
@@ -58,7 +77,20 @@
     - freezegun
     - pytest
 
+- name: Install the packages specified in requirements.txt in the Python 3.3 environment
+  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-3.3-tracker-environment
+
+# Setup a Python 2.7 virtual environment to run the tracker
+- name: Setup a environment for the tracker using Python 2.7
+  shell: virtualenv -p /opt/python2.7/bin/python2.7 /vagrant/snowplow-python-2.7-tracker-environment
+
+- name: Install packages required for the Python Tracker in the Python 2.7 environment 
+  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-2.7-tracker-environment"
+  with_items: 
+    - python-dateutil
+    - httmock
+    - freezegun
+    - pytest
+
 - name: Install the packages specified in requirements.txt
-  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-tracker-environment
-
-
+  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-2.7-tracker-environment
