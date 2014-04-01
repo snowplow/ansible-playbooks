@@ -36,15 +36,22 @@
   sudo: yes
 
 # Now download the Snowplow Python Tracker from Git
-- name: Clone Snowplow-Python-Tracker
-  git: repo=https://github.com/snowplow/snowplow-python-tracker.git dest=/vagrant/
+- name: Add Github to the list of known hosts so that we can clone the repo via SSH
+  shell: ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts 
+  sudo: yes
+
+- name: Ensure directory to clone the repo in exists
+  shell: mkdir /vagrant/snowplow-python-tracker creates=/vagrant/snowplow-python-tracker
+
+- name: Clone snowplow-python-tracker repo into the VM
+  git: repo=https://github.com/snowplow/snowplow-python-tracker.git dest=/vagrant/snowplow-python-tracker
 
 # Setup a virtualenv to run the tracker
-- name: Setup the virtualenv using Python 3.3
-  shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-tracker-environment
+- name: Setup a environment for the tracker using Python 3.3
+  shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-3.3-tracker-environment
 
 - name: Install packages required by Python by Snowplow-Python-Tracker
-  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-tracker-environment"
+  pip: name={{ item }} virtualenv="/vagrant/snowplow-python-3.3-tracker-environment"
   with_items: 
     - python-dateutil
     - httmock
