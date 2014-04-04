@@ -1,0 +1,14 @@
+---
+
+- name: Ensure ansible-cache directory exists
+  shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+  sudo: yes
+
+- name: Ensure directory for EMR CLI tools exists in /vagrant/emr-cli
+  shell: mkdir /vagrant/emr-cli creates=/vagrant/emr-cli
+
+- name: Download EMR CLI 
+  get_url: dest=/var/local/ansible-cache url=http://elasticmapreduce.s3.amazonaws.com/elastic-mapreduce-ruby.zip
+
+- name: Ensure EMR CLI is extracted
+  shell: chdir=/var/local/ansible-cache unzip elastic-mapreduce-ruby.zip -d /vagrant/
