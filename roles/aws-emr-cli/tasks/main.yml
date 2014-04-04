@@ -12,7 +12,7 @@
   sudo: yes
 
 - name: Ensure EMR CLI is extracted
-  shell: chdir=/var/local/ansible-cache unzip elastic-mapreduce-ruby.zip -d /vagrant creates=/vagrant/elastic-mapreduce-ruby
+  shell: chdir=/var/local/ansible-cache unzip elastic-mapreduce-ruby.zip -d /vagrant/emr-cli/ creates=/vagrant/elastic-mapreduce-ruby
 
 - name: Print a useful message
   debug: msg="EMR CLI tools installed into /vagrant/elastic-mapreduce-ruby. Remember to execute 'rvm use 1.8.7' before running them..."
