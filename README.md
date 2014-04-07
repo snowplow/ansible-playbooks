@@ -25,7 +25,20 @@ This structure makes it simple to compose new playbooks out of the roles. For ex
   roles:
     - base
     - ruby-rvm
-    - postgres-8.4
+    - postgres
+```
+
+
+## Installing specific versions of different packages e.g. Postgres
+
+We are moving to making it possible to decide, at run time, what version of each package you wish to install. This has been implemented with the Postgres playbook, for example.
+
+By default, running the Postgres playbook will install version 8.4. (That default is specified in `ansible-playbooks/roles/postgres/defaults/main.yml`).
+
+If instead you'd like to install Postgres 9.3, simply execute:
+
+```
+ansible-playbook /vagrant/ansible-playbooks/postgres.yml -i /vagrant/home/ansible/ansible_hosts --connection=local --extra-vars "postgres_version=9.3"
 ```
 
 For more information on roles in Ansible playbooks, consult the [Ansible documentation] [ansible-roles-documentation]

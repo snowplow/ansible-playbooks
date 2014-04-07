@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - postgres-8.4
+   - postgres

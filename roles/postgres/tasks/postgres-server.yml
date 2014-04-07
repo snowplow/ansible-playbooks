@@ -1,0 +1,11 @@
+---
+- name: install postgresql packages 
+  sudo: yes
+  apt: pkg={{ item }} state=installed
+  tags: [packages]
+  with_items:
+    - "postgresql-{{ postgres_version }}"
+    - libpq-dev
+    - "postgresql-contrib-{{ postgres_version }}"
+    - libxslt-dev 
+    - libxml2-dev

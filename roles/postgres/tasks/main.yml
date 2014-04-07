@@ -1,0 +1,6 @@
+---
+- include: add-apt-repo-for-postgres.yml
+- include: psql-client.yml
+- include: postgres-server.yml
+
+# To do - add tasks to create a login on the local postgres db for user: Vagrant
