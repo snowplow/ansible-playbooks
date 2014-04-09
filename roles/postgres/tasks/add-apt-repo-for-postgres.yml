@@ -3,11 +3,9 @@
 # For details see https://wiki.postgresql.org/wiki/Apt
 
 - name: Add Postgres repo to sources list
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' 
-                  state=present  update_cache=yes
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' state=present
   sudo: yes
 
 - name: Add key for Postgres repo
-  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc 
-           state=present
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
   sudo: yes
