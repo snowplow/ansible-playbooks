@@ -1,7 +1,7 @@
 ---
 - name: install postgresql packages 
   sudo: yes
-  apt: pkg={{ item }} state=installed
+  apt: pkg={{ item }} state=installed update_cache=yes
   tags: [packages]
   with_items:
     - "postgresql-client-{{ postgres_version }}"
