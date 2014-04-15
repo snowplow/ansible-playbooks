@@ -7,6 +7,9 @@
   with_items:
     - { name: 'jekyll',  version: "{{ jekyll_version }}", flags: '--no-ri --no-rdoc' }
 
+- name: Install kramdown
+  shell: gem install kramdown
+
 # Print a useful warning
 - name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use Jekyll
   shell: echo "-"
