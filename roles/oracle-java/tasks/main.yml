@@ -27,3 +27,9 @@
     when: oracle_java_version == 7
     tags: [java]
     sudo: yes
+
+  - name: Install Oracle Java 8
+    apt: pkg=oracle-java8-installer
+    when: oracle_java_version == 8
+    tags: [java]
+    sudo: yes
