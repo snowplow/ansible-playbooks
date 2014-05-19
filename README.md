@@ -28,6 +28,20 @@ This structure makes it simple to compose new playbooks out of the roles. For ex
     - postgres
 ```
 
+## Running the playbooks to install packages on local machine (e.g. Vagrant VM)
+
+Once you've SSHed into Vagrant,
+
+```
+ansible-playbook boto.yml -i /vagrant/home/ansible/ansible_hosts --connection=local
+```
+
+Note you can update the reference to the hosts file (`/vagrant/home/ansible/ansible_hosts`) to point at any file on the VM with the following contents:
+
+```
+[vagrant]
+127.0.0.1:2222
+```
 
 ## Installing specific versions of different packages e.g. Postgres
 
@@ -43,6 +57,44 @@ ansible-playbook /vagrant/ansible-playbooks/postgres.yml -i /vagrant/home/ansibl
 
 For more information on roles in Ansible playbooks, consult the [Ansible documentation] [ansible-roles-documentation]
 
+## Running the playbooks against a remote server (e.g. on EC2)
+
+To use the different roles in this repo to install the applications on a remote server e.g. on EC2:
+
+1. Update your hosts / inventory file with details of the server you wish to install the apps on
+2. Create a new playbook pointing at the appropriate host in your inventory file, and set to use the appropriate user
+3. Run it! Note that in general, we add the `---ask-sudo-pass` flag, 
+
+For example, to install any of the applications to a box called 'snowplow-external-server-1', make sure that the `~/.ssh/config` file contains something like the following:
+
+```
+...
+Host snowplow-external-server-1
+  Hostname ec2-11-222-333-4444.compute-1.amazonaws.com
+  User username_with_sudo_permissions
+  IdentityFile "~/.ssh/id_rsa"
+  Port 22
+  ForwardAgent yes
+ ...
+
+```
+
+Then Update the hosts file:
+
+```
+[snowplow-external-server-1]
+snowplow-external-server-1
+```
+
+Then create a playbook like the following:
+
+```yaml
+- hosts: snowplow-external-server-1
+  remote_user: username_with_sudo_permissions
+  
+  roles:
+   - role: oracle-java 
+```
 
 ## Copyright and license
 
