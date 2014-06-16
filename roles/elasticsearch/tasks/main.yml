@@ -28,3 +28,6 @@
 - name: Extract Kibana
   command: unzip kibana-3.1.0.zip chdir=/vagrant creates=/vagrant/kibana-3.1.0
 
+- name: Print a helpful message
+  debug: "If installing on a Vagrant VM, make sure you update the Vagrantfile to forward guest ports 9200 (for Elastic Search) and 8080 (for Kibana) to the host"
+
