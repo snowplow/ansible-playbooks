@@ -1,0 +1,24 @@
+---
+- name: Download Logstash
+  get_url: dest=/vagrant force=yes url=https://download.elasticsearch.org/logstash/logstash/logstash-1.4.1.tar.gz
+
+- name: Extract Logstash files
+  command: tar zxvf logstash-1.4.1.tar.gz chdir=/vagrant creates=/vagrant/logstash-1.4.1/
+
+- name: Download ElasticSearch
+  get_url: dest=/vagrant force=yes url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz
+
+- name: Extract ElasticSearch files
+  command: tar zxvf elasticsearch-1.1.1.tar.gz chdir =/vagrant creates=/vagrant/elasticsearch-1.1.1
+
+- name: Install required dependencies (python-software-properties, g++, make, nodejs, npn)
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  tags: [packages]
+  with_items:
+    - python-software-properties
+    - python
+    - g++ 
+    - make
+    - nodejs
+    - npn
