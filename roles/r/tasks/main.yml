@@ -1,0 +1,10 @@
+---
+- include: add-apt-repo-for-r.yml
+
+- name: install R packages 
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  tags: [packages]
+  with_items:
+    - r-base
+    - r-base-dev
