@@ -14,7 +14,7 @@
       with_items:
         - curl
         - vim
-        - libxslt-dev 
+        - libxslt1-dev 
         - libxml2-dev
         - unzip
         - python-pip
