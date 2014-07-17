@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - r
+   - rstudio-server

@@ -1,0 +1,21 @@
+---
+- name: install gdebi and libapparmor1 (used to install rstudio) 
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  tags: [packages]
+  with_items:
+    - gdebi-core
+    - libapparmor1
+
+# http://www.rstudio.com/products/rstudio/download-server/
+- name: Ensure ansible-cache directory exists
+  shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+  sudo: yes
+
+- name: download rstudio-server
+  get_url: url=http://download2.rstudio.org/rstudio-server-0.98.977-i386.deb dest=/var/local/ansible-cache/rstudio-server-0.98.977-i386.deb
+  sudo: yes
+
+- name: Install RStudio Server 
+  command: gdebi /var/local/ansible-cache/rstudio-server-0.98.977-amd64.deb
+  sudo: yes
