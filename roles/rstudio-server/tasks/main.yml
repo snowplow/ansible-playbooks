@@ -19,3 +19,7 @@
 - name: Install RStudio Server 
   command: gdebi /var/local/ansible-cache/rstudio-server-0.98.977-amd64.deb
   sudo: yes
+
+- name: "Setup username: rsuser, password: rspword to log into RStudio Server"
+  user: name=rsuser password=$6$rounds=100000$INgo5pOSR6YJURX2$MycqcjP9HV.P01xyzCqN8mQWJ/WLtIcjptd4waokL22/x2pg5g/spXf2BAG0IC/BiSLlA2MrJUURQVs6kuaFB0 update_password=always uid=1031
+  sudo: yes
