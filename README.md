@@ -96,6 +96,16 @@ Then create a playbook like the following:
    - role: oracle-java 
 ```
 
+## A note on RStudio setup
+
+RStudio uses PAM to do user management. Once you've run the RStudio Server playbook, create a new user to log in with:
+
+```
+$ sudo adduser rstudio
+```
+
+Assign that user a password. On your host machine, you'll then be able to log in (e.g. to localhost:8788) with the credentials you just created on the Ubuntu guest.
+
 ## Copyright and license
 
 Snowplow Ansible Playbooks is copyright 2014 Snowplow Analytics Ltd.
