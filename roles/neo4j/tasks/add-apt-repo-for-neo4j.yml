@@ -1,0 +1,11 @@
+---
+# This is necessary to install the latest versions of Neo4j
+# For details see http://www.neo4j.org/download/linux
+
+- name: Add key for Neo4j repo
+  apt_key: url=http://debian.neo4j.org/neotechnology.gpg.key state=present
+  sudo: yes
+  
+- name: Add Neo4j repo to sources list
+  apt_repository: repo='deb http://debian.neo4j.org/repo stable/' state=present
+  sudo: yes
