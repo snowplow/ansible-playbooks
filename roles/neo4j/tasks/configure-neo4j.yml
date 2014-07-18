@@ -1,0 +1,23 @@
+---
+# Mad props to http://www.delimited.io/blog/2014/1/15/getting-started-with-neo4j-on-ubuntu-server
+
+- name: Update /etc/security/limits.conf file
+  sudo: yes
+  lineinfile: dest=/etc/security/limits.conf 
+              line='root             soft    nofile          40000\nroot             hard    nofile          40000'
+              state=present
+
+- name: Update /etc/pam.d/su file  
+  sudo: yes
+  lineinfile: dest=/etc/pam.d/su 
+              regexp="^session    required   pam_limits.so" 
+              insertafter='^#session    required   pam_limits.so'
+              line="session    required   pam_limits.so"
+              state=present
+
+- name: Update /etc/neo4j/neo4j-server.properties to enable remote users to login to neo4j
+  sudo: yes
+  lineinfile: dest=/etc/neo4j/neo4j-server.properties 
+              regexp="^org.neo4j.server.webserver.address=0.0.0.0" 
+              insertafter='^#org.neo4j.server.webserver.address=0.0.0.0'
+              line="org.neo4j.server.webserver.address=0.0.0.0"
