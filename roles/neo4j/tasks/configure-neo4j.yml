@@ -1,17 +1,25 @@
 ---
 # Mad props to http://www.delimited.io/blog/2014/1/15/getting-started-with-neo4j-on-ubuntu-server
 
-- name: Update /etc/security/limits.conf file
+- name: Update /etc/security/limits.conf file (1/2)
   sudo: yes
   lineinfile: dest=/etc/security/limits.conf 
-              line='root             soft    nofile          40000\nroot             hard    nofile          40000'
+              insertbefore='# End of file'
+              line='root             soft    nofile          40000'
+              state=present
+
+- name: Update /etc/security/limits.conf file (2/2)
+  sudo: yes
+  lineinfile: dest=/etc/security/limits.conf 
+              insertbefore='# End of file'
+              line='root             hard    nofile          40000'
               state=present
 
 - name: Update /etc/pam.d/su file  
   sudo: yes
   lineinfile: dest=/etc/pam.d/su 
               regexp="^session    required   pam_limits.so" 
-              insertafter='^#session    required   pam_limits.so'
+              insertafter='^# session    required   pam_limits.so'
               line="session    required   pam_limits.so"
               state=present
 
@@ -21,3 +29,4 @@
               regexp="^org.neo4j.server.webserver.address=0.0.0.0" 
               insertafter='^#org.neo4j.server.webserver.address=0.0.0.0'
               line="org.neo4j.server.webserver.address=0.0.0.0"
+              state=present
