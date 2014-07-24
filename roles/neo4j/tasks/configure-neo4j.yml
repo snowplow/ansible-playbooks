@@ -5,14 +5,14 @@
   sudo: yes
   lineinfile: dest=/etc/security/limits.conf 
               insertbefore='# End of file'
-              line='root             soft    nofile          40000'
+              line='vagrant             soft    nofile          40000'
               state=present
 
 - name: Update /etc/security/limits.conf file (2/2)
   sudo: yes
   lineinfile: dest=/etc/security/limits.conf 
               insertbefore='# End of file'
-              line='root             hard    nofile          40000'
+              line='vagrant             hard    nofile          40000'
               state=present
 
 - name: Update /etc/pam.d/su file  
