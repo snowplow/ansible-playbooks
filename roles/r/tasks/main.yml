@@ -6,5 +6,6 @@
   apt: pkg={{ item }} state=installed update_cache=yes
   tags: [packages]
   with_items:
+    - libpq-dev
     - r-base
     - r-base-dev
