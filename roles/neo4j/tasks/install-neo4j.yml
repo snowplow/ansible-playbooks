@@ -1,0 +1,15 @@
+---
+- name: Update apt cache
+  apt: update-cache=yes cache_valid_time=86400
+  sudo: yes
+
+- name: Update all packages
+  apt: upgrade=dist
+  sudo: yes
+
+- name: Install Neo4j packages 
+  sudo: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  tags: [packages]
+  with_items:
+    - neo4j
