@@ -2,6 +2,5 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - yui-compressor
    - nodejs
    - grunt
