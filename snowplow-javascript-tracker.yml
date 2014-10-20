@@ -4,3 +4,4 @@
    roles:
    - nodejs
    - grunt
+   - oracle-java
