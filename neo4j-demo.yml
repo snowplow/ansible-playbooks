@@ -7,9 +7,7 @@
 # Now run the playbook, supplying an instance name and EC2 creds
 # Examples:
 #
-# ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem -e "inst_name=<myinst> keypair=myawskey" neo4j-demo.yml
-#
-# ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem --extra-vars '{"inst_name":"<myinst>","keypair":"myawskey"}' neo4j-demo.yml
+# ansible-playbook --private-key=~/.ssh/my-key-pair-name.pem -e "instance_id=neo4jdemo1 inst_name=neo4jdemo1 keypair=key-pair-name" neo4j-demo.yml
 
 
 - name: Stage EBS AWS Server
@@ -28,11 +26,16 @@
         #instance_profile_name: "{{ instance_profile_name }}"
         image: "{{ image[instance_type] }}"
         instance_tags: '{"Name":"{{ inst_name }}",  "systemtype":"neo4j-demo" }'
+        id: "{{ instance_id }}"
         wait: true
       register: ec2
   
     - name: Report
       local_action: debug msg="Instance Launched."
+
+    - debug: var=ec2
+    - debug: var=item  
+      with_items: ec2.instances
 
     - name: Add all instance public IPs to host group
       local_action: add_host hostname={{ item.public_ip }} groupname=ec2hosts

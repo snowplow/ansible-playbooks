@@ -3,7 +3,7 @@ ansible_cache_dir: /var/cache/ansible # Need to update references to ansible cac
 
 
 # EC2 related variables
-instance_type: c3.xlarge
+instance_type: "c3.xlarge"
 security_groups: ['demo']
 region: eu-west-1
-image: { "t1.micro": "ami-93f4a8fa", "m1.small": "ami-93f4a8fa", "m1.medium": "ami-0568456c", "m1.large": "ami-0568456c", "m3.medium": "ami-0568456c", "m3.large": "ami-0568456c"}
+image: { "m3.large": "ami-f4b11183", "c3.xlarge": "ami-f4b11183"}
