@@ -13,6 +13,3 @@
   tags: [packages]
   with_items:
     - neo4j
-    
-- name: Start Neo4j server
-  command: neo4j start

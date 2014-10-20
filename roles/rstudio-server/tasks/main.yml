@@ -1,11 +1,12 @@
 ---
-- name: Install gdebi and libapparmor1 (used to install RStudio Server) 
+- name: Install gdebi and libapparmor1 (used to install RStudio Server) and libcurl4-gnutls-dev (required for RCurl and devtools packages)
   sudo: yes
   apt: pkg={{ item }} state=installed update_cache=yes
   tags: [packages]
   with_items:
     - gdebi-core
     - libapparmor1
+    - libcurl4-gnutls-dev
 
 # http://www.rstudio.com/products/rstudio/download-server/
 - name: Ensure ansible-cache directory exists
