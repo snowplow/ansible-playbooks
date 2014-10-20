@@ -4,6 +4,10 @@
     register: wanted_version_installed
     ignore_errors: True
 
+  - name: g++ | Installing g++
+    sudo: yes
+    action: apt pkg=g++
+
   - name: Node.js | Fetching node.js source
     action: get_url url=http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }} dest=/tmp/
     when: wanted_version_installed.rc == 1
