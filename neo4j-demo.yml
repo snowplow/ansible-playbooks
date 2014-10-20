@@ -10,10 +10,7 @@
 # ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem -e "inst_name=<myinst> keypair=myawskey" neo4j-demo.yml
 #
 # ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem --extra-vars '{"inst_name":"<myinst>","keypair":"myawskey"}' neo4j-demo.yml
-#
-# ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem --extra-vars '{"inst_name":"<myinst>","keypair":"myawskey", "security_groups":["mysg1","mysg2"]}' looker-hosted-provision.yml
-#
-# ansible-playbook -i hosts --private-key=~/.ssh/myawskey.pem --extra-vars '{"inst_name":"<myinst>","keypair":"myawskey", "security_groups":["mysg1","mysg2"]}' looker-hosted-provision.yml
+
 
 - name: Stage EBS AWS Server
   hosts: localhost
