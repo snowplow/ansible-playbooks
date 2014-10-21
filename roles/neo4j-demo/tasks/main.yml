@@ -1,0 +1,10 @@
+---
+- name: Fetch sample data
+
+- name: Extract to the relevant directory
+
+- name: Copy into Neo4J
+
+- name: Stop Neo4J
+
+- name: Start Neo4J
