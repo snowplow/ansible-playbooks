@@ -1,0 +1,2 @@
+---
+ansible_cache: /opt/ansible_cache

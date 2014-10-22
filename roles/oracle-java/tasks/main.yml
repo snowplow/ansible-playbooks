@@ -7,7 +7,7 @@
     sudo: yes
 
   - name: Install Oracle Java Repo Installer Repository
-    apt_repository: repo=ppa:webupd8team/java update-cache=yes
+    apt_repository: repo=ppa:webupd8team/java update-cache=yes 
     tags: [java]
     sudo: yes
 
