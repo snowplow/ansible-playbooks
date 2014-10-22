@@ -3,13 +3,17 @@
   service: name=neo4j-service state=stopped
 
 - name: Ensure that ansible_cache directory exists
-  file: {{ ansible_cache }} state=directory
+  file: path="{{ ansible_cache }}" state=directory
 
 - name: Fetch sample data
   get_url: url=https://s3-eu-west-1.amazonaws.com/nickdingwall/demo/data.tar.gz dest="{{ ansible_cache }}"
 
 - name: Extract to the relevant directory
   unarchive: src="{{ ansible_cache }}/data.tar.gz" dest=/var/lib/neo4j copy=no 
+  sudo: yes
+
+- name: Set permissions on data directory (so owned by Neo4j and writable)
+  file: path=/var/lib/neo4j/data state=directory owner=neo4j recurse=yes
   sudo: yes
 
 - name: Start Neo4J as root user
