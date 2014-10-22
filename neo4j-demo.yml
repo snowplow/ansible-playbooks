@@ -47,10 +47,11 @@
 
 - name: Configure Instance
   hosts: ec2hosts
-  user: ubuntu
+  remote_user: ubuntu
   sudo: yes
   gather_facts: true
 
   roles:
    - neo4j
+   - neo4j-demo
    

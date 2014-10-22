@@ -2,3 +2,4 @@
 - include: add-apt-repo-for-neo4j.yml
 - include: install-neo4j.yml
 - include: configure-neo4j.yml
+- include: restart-neo4j.yml
