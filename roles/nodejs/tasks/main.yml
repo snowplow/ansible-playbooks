@@ -2,7 +2,7 @@
   - name: Node.js | Checking installed version of node.js
     shell: /usr/bin/test "$(node -v 2> /dev/null)" = v{{ node_version }}
     register: wanted_version_installed
-    ignore_errors: True
+    failed_when: wanted_version_installed.rc > 1
 
   - name: g++ | Installing g++
     sudo: yes
