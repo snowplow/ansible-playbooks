@@ -5,14 +5,14 @@
   sudo: yes
   lineinfile: dest=/etc/security/limits.conf 
               insertbefore='# End of file'
-              line='{{ remote_user }}             soft    nofile          40000'
+              line='neo4j             soft    nofile          40000'
               state=present
 
 - name: Update /etc/security/limits.conf file (2/2)
   sudo: yes
   lineinfile: dest=/etc/security/limits.conf 
               insertbefore='# End of file'
-              line='{{ remote_user }}             hard    nofile          40000'
+              line='neo4j             hard    nofile          40000'
               state=present
 
 - name: Update /etc/pam.d/su file  
