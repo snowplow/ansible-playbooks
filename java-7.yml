@@ -1,5 +1,0 @@
----
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - role: oracle-java # Note: version 7 installed by default (no need to specify)
