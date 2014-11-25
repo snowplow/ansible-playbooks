@@ -1,7 +1,7 @@
 ---
 
 - name: Ensure that ansible_cache directory exists
-  file: {{ ansible_cache }} state=directory
+  file: path="{{ ansible_cache }}" state=directory
   sudo: yes
   tags: [gradle]
 
