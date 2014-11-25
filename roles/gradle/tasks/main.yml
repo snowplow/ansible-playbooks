@@ -1,11 +1,17 @@
 ---
+
+- name: Ensure that ansible_cache directory exists
+  file: {{ ansible_cache }} state=directory
+  sudo: yes
+  tags: [gradle]
+
 - name: Download Gradle {{gradle_version}}
-  get_url: dest=/var/local/ansible-cache/ url=https://services.gradle.org/distributions/{{gradle_zipfile}}
+  get_url: dest="{{ ansible_cache }}" url=https://services.gradle.org/distributions/{{gradle_zipfile}}
   sudo: yes
   tags: [gradle]
 
 - name: Extract Gradle
-  shell: unzip /var/local/ansible-cache/{{gradle_zipfile}} -d /usr/local/share/ creates=/usr/local/share/{{gradle_folder}}
+  shell: unzip "{{ ansible_cache }}/{{gradle_zipfile}}" -d /usr/local/share/ creates=/usr/local/share/{{gradle_folder}}
   sudo: yes
   tags: [gradle]
 
