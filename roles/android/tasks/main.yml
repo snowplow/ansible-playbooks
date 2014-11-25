@@ -1,0 +1,57 @@
+---
+- name: Ensure that ansible_cache directory exists
+  file: path={{ ansible_cache }} state=directory
+  sudo: yes
+
+- name: get the current users home
+  shell: echo $HOME
+  register: user_home
+
+- name: get the current users name
+  shell: id -u -n
+  register: user_name
+
+- name: get the current users group
+  shell: id -g -n
+  register: user_group
+
+- name: install basic packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  tags: [packages]
+  with_items:
+    - ant
+    - libc6-i386
+    - lib32stdc++6
+    - lib32gcc1
+    - lib32ncurses5
+    - zlib1g
+    - lib32z1
+
+- name: download Android SDK
+  get_url: dest={{ ansible_cache }} url=http://dl.google.com/android/{{ android_zipfile }}
+  sudo: yes
+
+- name: make opt dir for user
+  file: path="{{ user_home.stdout }}/opt" state=directory
+  sudo: no
+
+- name: unpack Android SDK
+  action: unarchive copy=no src={{ ansible_cache }}/{{ android_zipfile }} dest={{ user_home.stdout }}/opt creates={{ user_home.stdout }}/opt/{{ android_folder }}
+  sudo: no
+
+- name: chown files
+  action: file path={{ user_home.stdout }}/opt/{{ android_folder }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
+
+- name: install android platform-tools
+  action: shell creates={{ user_home.stdout }}/opt/android-sdk-linux/platform-tools echo y | {{ user_home.stdout }}/opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter platform-tool-19.1.0,build-tools-19.1.0,android-19,105,106,99,98,16,4,2
+  sudo: no
+
+- name: add ANDROID_HOME
+  action: lineinfile dest={{ user_home.stdout }}/.bashrc line="{{ item }}"
+  with_items:
+    - 'export ANDROID_HOME={{ user_home.stdout }}/opt/{{ android_folder }}'
+    - 'export ANDROID_TOOLS=$ANDROID_HOME/tools/'
+    - 'export ANDROID_PLATFORM_TOOLS=$ANDROID_HOME/platform-tools/'
+    - 'export PATH=$PATH:$ANDROID_TOOLS:$ANDROID_PLATFORM_TOOLS'
+  sudo: no
