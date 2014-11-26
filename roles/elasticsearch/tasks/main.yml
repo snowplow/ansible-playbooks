@@ -1,15 +1,15 @@
 ---
 - name: Download Logstash
-  get_url: dest=/vagrant url=https://download.elasticsearch.org/logstash/logstash/logstash-1.4.1.tar.gz
+  get_url: dest=/vagrant url=https://download.elasticsearch.org/logstash/logstash/logstash-{{ logstash_version }}.tar.gz
 
 - name: Extract Logstash files
-  command: tar zxvf logstash-1.4.1.tar.gz chdir=/vagrant creates=/vagrant/logstash-1.4.1/
+  command: tar zxvf logstash-{{logstash_version}}.tar.gz chdir=/vagrant creates=/vagrant/logstash-{{ logstash_version }}}/
 
 - name: Download ElasticSearch
-  get_url: dest=/vagrant url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.tar.gz
+  get_url: dest=/vagrant url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ elasticsearch_version }}.tar.gz
 
 - name: Extract ElasticSearch files
-  command: tar zxvf elasticsearch-1.1.1.tar.gz chdir=/vagrant creates=/vagrant/elasticsearch-1.1.1
+  command: tar zxvf elasticsearch-{{ elasticsearch_version}}.tar.gz chdir=/vagrant creates=/vagrant/elasticsearch-{{ elasticsearch_version }}.
 
 - name: "Install required dependencies (python-software-properties, g++, make, nodejs, npm)"
   sudo: yes
@@ -23,10 +23,10 @@
     - npm
 
 - name: Download Kibana
-  get_url: dest=/vagrant/ url=https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.zip
+  get_url: dest=/vagrant/ url=https://download.elasticsearch.org/kibana/kibana/kibana-{{ kibana_version }}.zip
 
 - name: Extract Kibana
-  command: unzip kibana-3.1.0.zip chdir=/vagrant creates=/vagrant/kibana-3.1.0
+  command: unzip kibana-{{ kibana_version }}.zip chdir=/vagrant creates=/vagrant/kibana-{{ kibana_version }}
 
 - name: Print a helpful message
   debug: "If installing on a Vagrant VM, make sure you update the Vagrantfile to forward guest ports 9200 (for Elastic Search) and 8080 (for Kibana) to the host"

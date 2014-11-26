@@ -1,0 +1,4 @@
+---
+logstash_version: 1.4.2
+elasticsearch_version: 1.4.0
+kibana_version: 4.0.0-BETA2
