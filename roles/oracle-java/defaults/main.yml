@@ -1,2 +1,2 @@
 ---
-oracle_java_version: 7  # Default to installing Java 7 unless 6 or 8 is explicitly asked for (e.g. because developing for EMR)
+oracle_java_version: 8  # Default to installing Java 8 unless 6 or 7 is explicitly asked for
