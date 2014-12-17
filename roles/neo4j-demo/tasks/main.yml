@@ -2,14 +2,14 @@
 - name: Stop Neo4J before loading in the required data
   service: name=neo4j-service state=stopped
 
-- name: Ensure that ansible_cache directory exists
-  file: path="{{ ansible_cache }}" state=directory
+- name: Ensure that ansible_cache_dir directory exists
+  file: path="{{ ansible_cache_dir }}" state=directory
 
 - name: Fetch sample data
-  get_url: url=https://s3-eu-west-1.amazonaws.com/nickdingwall/demo/data.tar.gz dest="{{ ansible_cache }}"
+  get_url: url=https://s3-eu-west-1.amazonaws.com/nickdingwall/demo/data.tar.gz dest="{{ ansible_cache_dir }}"
 
 - name: Extract to the relevant directory
-  unarchive: src="{{ ansible_cache }}/data.tar.gz" dest=/var/lib/neo4j copy=no 
+  unarchive: src="{{ ansible_cache_dir }}/data.tar.gz" dest=/var/lib/neo4j copy=no
   sudo: yes
 
 - name: Set permissions on data directory (so owned by Neo4j and writable)

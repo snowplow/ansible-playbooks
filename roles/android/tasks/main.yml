@@ -1,6 +1,6 @@
 ---
-- name: Ensure that ansible_cache directory exists
-  file: path={{ ansible_cache }} state=directory
+- name: Ensure that ansible_cache_dir directory exists
+  file: path={{ ansible_cache_dir }} state=directory
   sudo: yes
 
 - name: get the current users home
@@ -29,7 +29,7 @@
     - lib32z1
 
 - name: download Android SDK
-  get_url: dest={{ ansible_cache }} url=http://dl.google.com/android/{{ android_zipfile }}
+  get_url: dest={{ ansible_cache_dir }} url=http://dl.google.com/android/{{ android_zipfile }}
   sudo: yes
 
 - name: make opt dir for user
@@ -37,7 +37,7 @@
   sudo: no
 
 - name: unpack Android SDK
-  action: unarchive copy=no src={{ ansible_cache }}/{{ android_zipfile }} dest={{ user_home.stdout }}/opt creates={{ user_home.stdout }}/opt/{{ android_folder }}
+  action: unarchive copy=no src={{ ansible_cache_dir }}/{{ android_zipfile }} dest={{ user_home.stdout }}/opt creates={{ user_home.stdout }}/opt/{{ android_folder }}
   sudo: no
 
 - name: chown files

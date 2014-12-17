@@ -1,2 +1,2 @@
 ---
-ansible_cache: /opt/ansible_cache
+ansible_cache_dir: /opt/ansible_cache
