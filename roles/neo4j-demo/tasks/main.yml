@@ -2,9 +2,6 @@
 - name: Stop Neo4J before loading in the required data
   service: name=neo4j-service state=stopped
 
-- name: Ensure that ansible_cache_dir directory exists
-  file: path="{{ ansible_cache_dir }}" state=directory
-
 - name: Fetch sample data
   get_url: url=https://s3-eu-west-1.amazonaws.com/nickdingwall/demo/data.tar.gz dest="{{ ansible_cache_dir }}"
 

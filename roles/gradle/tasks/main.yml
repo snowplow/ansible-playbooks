@@ -1,10 +1,5 @@
 ---
 
-- name: Ensure that ansible_cache_dir directory exists
-  file: path="{{ ansible_cache_dir }}" state=directory
-  sudo: yes
-  tags: [gradle]
-
 - name: Download Gradle {{gradle_version}}
   get_url: dest="{{ ansible_cache_dir }}" url=https://services.gradle.org/distributions/{{gradle_zipfile}}
   sudo: yes

@@ -6,7 +6,7 @@
     - name: Update all packages
       apt: upgrade=dist
       sudo: yes
-      
+
     - name: install basic packages
       sudo: yes
       apt: pkg={{ item }} state=latest
@@ -19,3 +19,7 @@
         - unzip
         - python-pip
         - python-psycopg2
+
+    - name: Ensure that ansible_cache_dir directory exists
+      file: path={{ ansible_cache_dir }} state=directory
+      sudo: yes

@@ -1,8 +1,4 @@
 ---
-- name: Ensure that ansible_cache_dir directory exists
-  file: path={{ ansible_cache_dir }} state=directory
-  sudo: yes
-
 - name: get the current users home
   shell: echo $HOME
   register: user_home
