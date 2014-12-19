@@ -19,12 +19,12 @@
   file: path={{ golang_gopath }} state=directory
   sudo: yes
 
-- name: Configure | Add the Go bin directory to the PATH environment variable for all users
-  copy: src=go-bin.sh
+- name: Configure | Set GOROOT for all users and add to PATH
+  copy: src=go-root.sh
         dest=/etc/profile.d
   sudo: yes
 
-- name: Configure | Set GOPATH for all users
+- name: Configure | Set GOPATH for all users and add to PATH
   copy: src=go-path.sh
         dest=/etc/profile.d
   sudo: yes
