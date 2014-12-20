@@ -1,5 +1,13 @@
 ---
 
+- name: Prepare | Get the current users name
+  shell: id -u -n
+  register: user_name
+
+- name: Prepare | Get the current users group
+  shell: id -g -n
+  register: user_group
+
 - name: Prepare | Register the current Go version (if any)
   command: "{{ software_install_dir }}/go/bin/go version"
   ignore_errors: yes
@@ -18,6 +26,9 @@
 - name: Install | Ensure that GOPATH exists
   file: path={{ golang_gopath }} state=directory
   sudo: yes
+
+- name: Install | Ensure the GOPATH is owned by the current user
+  action: file path={{ golang_path }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
 
 - name: Configure | Set GOROOT for all users and add to PATH
   copy: src=go-root.sh
