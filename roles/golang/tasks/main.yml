@@ -28,7 +28,7 @@
   sudo: yes
 
 - name: Install | Ensure the GOPATH is owned by the current user
-  action: file path={{ golang_path }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
+  action: file path={{ golang_gopath }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
 
 - name: Configure | Set GOROOT for all users and add to PATH
   copy: src=go-root.sh
