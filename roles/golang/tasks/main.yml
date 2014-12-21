@@ -23,8 +23,12 @@
   when: go_version|failed or go_version.stdout != golang_version_string
   sudo: yes
 
-- name: Install | Ensure that GOPATH exists and is owned by current user
-  file: path={{ golang_gopath }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
+- name: Install | Ensure that GOPATH exists
+  file: path={{ golang_gopath }} state=directory
+  sudo: yes
+
+- name: Install | Ensure that GOPATH is owned by current user
+  shell: chown -R {{ user_name.stdout }}:{{ user_group.stdout }} {{ golang_gopath }}
   sudo: yes
 
 - name: Configure | Set GOROOT for all users and add to PATH
