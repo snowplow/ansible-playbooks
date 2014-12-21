@@ -1,6 +1,7 @@
 ---
-golang_download_location: "http://golang.org/dl/{{ golang_tarball }}"
-golang_tarball: "go{{ golang_version }}.linux-amd64.tar.gz"
-golang_version_string: "go version go{{ golang_version }} linux/amd64"
+golang_download_location: "http://golang.org/dl/{{golang_tarball}}"
+golang_tarball: "go{{golang_version}}.linux-amd64.tar.gz"
+golang_version_string: "go version go{{golang_version}} linux/amd64"
 golang_env:
-  GOPATH: "{{ golang_gopath }}"
+  GOPATH: {{golang_gopath}}
+  PATH: {{software_install_dir}}/go/bin

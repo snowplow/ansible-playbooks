@@ -9,26 +9,26 @@
   register: user_group
 
 - name: Prepare | Register the current Go version (if any)
-  command: "{{ software_install_dir }}/go/bin/go version"
+  command: "{{software_install_dir}}/go/bin/go version"
   ignore_errors: yes
   register: go_version
 
 - name: Install | Download the Go tarball
-  get_url: url={{ golang_download_location }}
-           dest={{ ansible_cache_dir }}
+  get_url: url={{golang_download_location}}
+           dest={{ansible_cache_dir}}
   sudo: yes
 
 - name: Install | Extract the Go tarball if Go is not yet installed or if it is not the desired version
-  shell: tar xzf {{ ansible_cache_dir }}/{{ golang_tarball }} -C {{ software_install_dir }} creates={{ software_install_dir }}/go
+  shell: tar xzf {{ansible_cache_dir}}/{{golang_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/go
   when: go_version|failed or go_version.stdout != golang_version_string
   sudo: yes
 
 - name: Install | Ensure that GOPATH exists
-  file: path={{ golang_gopath }} state=directory
+  file: path={{golang_gopath}} state=directory
   sudo: yes
 
 - name: Install | Ensure that GOPATH is owned by current user
-  shell: chown -R {{ user_name.stdout }}:{{ user_group.stdout }} {{ golang_gopath }}
+  shell: chown -R {{user_name.stdout}}:{{user_group.stdout}} {{golang_gopath}}
   sudo: yes
 
 - name: Configure | Set GOROOT for all users and add to PATH
@@ -42,5 +42,5 @@
   sudo: yes
 
 - name: Install | Ensure godep is installed
-  command: go get github.com/tools/godep creates={{ golang_gopath }}/bin/godep
+  command: go get github.com/tools/godep creates={{golang_gopath}}/bin/godep
   environment: golang_env
