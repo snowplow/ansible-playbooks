@@ -32,8 +32,7 @@
   sudo: yes
 
 - name: Install | Ensure godep is installed
-  command: go get github.com/tools/godep
-  creates={{ golang_gopath }}/bin/godep
+  command: go get github.com/tools/godep creates={{ golang_gopath }}/bin/godep
   environment: golang_env
 
 - name: Configure | Set GOROOT for all users and add to PATH
