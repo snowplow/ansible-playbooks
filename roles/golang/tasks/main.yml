@@ -31,6 +31,11 @@
   shell: chown -R {{ user_name.stdout }}:{{ user_group.stdout }} {{ golang_gopath }}
   sudo: yes
 
+- name: Install | Ensure godep is installed
+  command: go get github.com/tools/godep
+  creates={{ golang_gopath }}/bin/godep
+  environment: env
+
 - name: Configure | Set GOROOT for all users and add to PATH
   copy: src=go-root.sh
         dest=/etc/profile.d
