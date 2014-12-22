@@ -16,10 +16,11 @@
     - curl
     - libpq-dev
 
+- name: Install | Ensure RVM signature is installed
+  shell: "gpg --keyserver hkp://keys.gnupg.net --recv-keys {{rvm_signature}}"
+
 - name: Install | Ensure RVM is installed
   shell: curl -L {{rvm_download_location}} | bash -s stable --ruby creates=/home/{{user_name.stdout}}/.rvm
-  tags: [ruby]
 
 - name: Install | Ensure Ruby 1.9.3 is installed as default
   shell: '/home/{{user_name.stdout}}/.rvm/bin/rvm install --default {{ruby_version}} creates=/usr/local/rvm/rubies/{{ruby_version}}'
-  tags: [ruby]
