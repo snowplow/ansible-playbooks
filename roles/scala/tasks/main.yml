@@ -5,7 +5,7 @@
   tags: [scala]
 
 - name: Install | Extract Scala
-  shell: tar xzf {{ansible_cache_dir}}/{{scala_download_location}} -C {{software_install_dir}} creates={{software_install_dir}}/scala-{{scala_version}}
+  shell: tar xzf {{ansible_cache_dir}}/{{scala_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/scala-{{scala_version}}
   sudo: yes
   tags: [scala]
 
