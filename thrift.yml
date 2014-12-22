@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - ruby-rvm
+   - thrift
