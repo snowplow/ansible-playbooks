@@ -1,0 +1,3 @@
+---
+sbt_tarball: "sbt.tgz"
+sbt_download_location: "http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/{{sbt_version}}/{{sbt_tarball}}
