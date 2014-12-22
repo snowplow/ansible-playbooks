@@ -1,35 +1,27 @@
 ---
   - name: Install PyCurl (required for apt-repository updates)
     apt: pkg=python-pycurl
-    tags:
-      - packages
-      - java
     sudo: yes
 
   - name: Install Oracle Java Repo Installer Repository
     apt_repository: repo=ppa:webupd8team/java update-cache=yes 
-    tags: [java]
     sudo: yes
 
   - name: Wizardry to bypass the Oracle License File prompt
     shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-    tags: [java]
     sudo: yes
 
   - name: Install Oracle Java 6
     apt: pkg=oracle-java6-installer
     when: oracle_java_version == 6
-    tags: [java]
     sudo: yes
 
   - name: Install Oracle Java 7
     apt: pkg=oracle-java7-installer
     when: oracle_java_version == 7
-    tags: [java]
     sudo: yes
 
   - name: Install Oracle Java 8
     apt: pkg=oracle-java8-installer
     when: oracle_java_version == 8
-    tags: [java]
     sudo: yes

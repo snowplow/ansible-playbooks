@@ -25,26 +25,21 @@
 - name: Install | Ensure Thrift source downloaded
   get_url: dest={{ansible_cache_dir}} url={{thrift_download_location}}
   register: thrift_downloaded
-  tags: [thrift]
   sudo: yes
 
 - name: Install | Ensure Thrift extracted
   shell: tar xzf {{ansible_cache_dir}}/{{thrift_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/thrift-{{thrift_version}}
   when: thrift_downloaded.changed
-  tags: [thrift]
   sudo: yes
 
 - name: Install | Ensure Thrift configured
   shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no
   when: thrift_downloaded.changed
-  tags: [thrift]
 
 - name: Install | Ensure Thrift make'd
   shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} make
   when: thrift_downloaded.changed
-  tags: [thrift]
 
 - name: Install | Ensure Thrift installed
   shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} make install creates={{user_binaries}}/thrift
-  tags: [thrift]
   sudo: yes
