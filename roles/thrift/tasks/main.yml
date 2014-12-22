@@ -1,5 +1,5 @@
 ---
-- name: Ensure packages for building Thrift installed
+- name: Dependencies | Ensure packages for building Thrift installed
   sudo: yes
   apt: pkg={{ item }} state=installed
   tags:
@@ -22,29 +22,29 @@
     - libssl-dev
     - ant
 
-- name: Ensure Thrift {{thrift_version}} source downloaded
-  get_url: dest=/var/local/ansible-cache/ url=http://download.nextag.com/apache/thrift/{{thrift_version}}/thrift-{{thrift_version}}.tar.gz
+- name: Install | Ensure Thrift source downloaded
+  get_url: dest={{ansible_cache_dir}} url={{thrift_download_location}}
   register: thrift_downloaded
   tags: [thrift]
   sudo: yes
 
-- name: Ensure Thrift extracted
-  shell: tar xzf /var/local/ansible-cache/thrift-{{thrift_version}}.tar.gz -C /usr/local/share creates=/usr/local/share/thrift-{{thrift_version}}
+- name: Install | Ensure Thrift extracted
+  shell: tar xzf {{ansible_cache_dir}}/{{thrift_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/thrift-{{thrift_version}}
   when: thrift_downloaded.changed
   tags: [thrift]
   sudo: yes
 
-- name: Ensure Thrift configured
-  shell: chdir=/usr/local/share/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no
+- name: Install | Ensure Thrift configured
+  shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no
   when: thrift_downloaded.changed
   tags: [thrift]
 
-- name: Ensure Thrift make'd
-  shell: chdir=/usr/local/share/thrift-{{thrift_version}} make
+- name: Install | Ensure Thrift make'd
+  shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} make
   when: thrift_downloaded.changed
   tags: [thrift]
 
-- name: Ensure Thrift installed
+- name: Install | Ensure Thrift installed
+  shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} make install creates={{user_binaries}}/thrift
+  tags: [thrift]
   sudo: yes
-  shell: chdir=/usr/local/share/thrift-{{thrift_version}} make install creates=/usr/local/bin/thrift
-  tags: [thrift]

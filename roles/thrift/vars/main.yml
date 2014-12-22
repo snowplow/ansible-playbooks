@@ -1,0 +1,3 @@
+---
+thrift_tarball: "thrift-{{thrift_version}}.tar.gz"
+thrift_download_location: "http://download.nextag.com/apache/thrift/{{thrift_version}}/{{thrift_tarball}}"

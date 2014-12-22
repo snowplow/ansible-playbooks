@@ -1,7 +1,14 @@
 ---
 
-# curl required to download RVM. libpz-dev is required as well according to Alex: https://github.com/snowplow/ansible-playbooks/issues/22
-- name: Ensure curl is installed (used to download RVM)
+- name: Prepare | Get the current users name
+  shell: id -u -n
+  register: user_name
+
+- name: Prepare | Get the current users group
+  shell: id -g -n
+  register: user_group
+
+- name: Install | Ensure curl is installed (used to download RVM)
   apt: pkg={{ item }} state=installed
   tags: [packages]
   sudo: yes
@@ -9,26 +16,10 @@
     - curl
     - libpq-dev
 
-# INSTALL RVM
-- name: Ensure RVM is installed
-  shell: curl -L https://get.rvm.io | bash -s stable --ruby creates=/home/vagrant/.rvm
-
-# INSTALL Ruby 1.9.3
-- name: Ensure Ruby 1.9.3 is installed as default
-  shell: '/home/vagrant/.rvm/bin/rvm install --default {{ default_ruby_version }} creates=/usr/local/rvm/rubies/{{ default_ruby_version }}'
+- name: Install | Ensure RVM is installed
+  shell: curl -L {{rvm_download_location}} | bash -s stable --ruby creates=/home/{{user_name.stdout}}/.rvm
   tags: [ruby]
 
-# The purpose of the following command is to start RVM so that we can install gems through it immediately. 
-# This should make it possible to compose a playbook where this task list is followed immediately by a list of gems to install
-# Unfortunately, this doesn't appear to be working i.e. at the moment, if you want to run such a playbook
-# it will error when run the first time on the first gem installation. If you then exit the terminal and start a new
-# terminal session, then rerun the playbook, it will work. 
-# For more information on having to restart the terminal following RVM installation, see http://rvm.io/rvm/install esp.
-# section on 'Reload shell configuration & test'
-- name: Start RVM (otherwise only launched when the shell is rebooted)
-  shell: executable=/bin/bash source /home/vagrant/.rvm/bin/rvm
-
-
-# Print a useful warning
-- name: NOTICE! You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run '. /home/vagrant/.rvm/scripts/rvm
-  shell: echo "You will need to exit the terminal and open a fresh terminal before you can use RVM. \n(Or alternatively run '. /home/vagrant/.rvm/scripts/rvm'"
+- name: Install | Ensure Ruby 1.9.3 is installed as default
+  shell: '/home/{{user_name.stdout}}/.rvm/bin/rvm install --default {{ruby_version}} creates=/usr/local/rvm/rubies/{{ruby_version}}'
+  tags: [ruby]
