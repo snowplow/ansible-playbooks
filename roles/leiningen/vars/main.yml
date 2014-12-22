@@ -1,0 +1,2 @@
+---
+lein_download_location: "https://raw.github.com/technomancy/leiningen/{{lein_version}}/bin/lein"
