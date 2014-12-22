@@ -6,8 +6,10 @@
   get_url:  url=https://raw.github.com/technomancy/leiningen/{{lein_version}}/bin/lein
             dest={{software_install_dir}}/leiningen-{{lein_version}}/lein
             mode=0755
+  sudo: yes
 
 - name: Install | Link lein into user binaries
   file: dest={{user_binaries}}/lein
         src={{software_install_dir}}/leiningen-{{lein_version}}/lein
         state=link
+  sudo: yes
