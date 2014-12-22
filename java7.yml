@@ -2,5 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - { role: gradle, oracle_java_version: 7 }
    - { role: oracle-java, oracle_java_version: 7 }

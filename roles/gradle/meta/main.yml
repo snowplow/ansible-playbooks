@@ -1,3 +1,0 @@
----
-dependencies:
-  - { role: oracle-java, oracle_java_version: oracle_java_version }

@@ -2,5 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - { role: gradle } # Note: oracle-java v8 installed by default (no need to specify)
    - { role: oracle-java } # Note: oracle-java v8 installed by default (no need to specify)
