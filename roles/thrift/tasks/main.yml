@@ -33,7 +33,7 @@
   sudo: yes
 
 - name: Install | Ensure Thrift configured
-  shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no
+  shell: chdir={{software_install_dir}}/thrift-{{thrift_version}} ./configure -with-cpp=no -with-python=no -with-ruby=no
   when: thrift_downloaded.changed
 
 - name: Install | Ensure Thrift make'd
