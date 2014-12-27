@@ -1,6 +1,5 @@
 ---
 ansible_cache_dir: /opt/ansible_cache
-android_java_version: 7
 android_version: "23.0.2"
 android_zipfile: "android-sdk_r{{android_version}}-linux.tgz"
 android_folder:  "android-sdk-linux"
