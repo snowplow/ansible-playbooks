@@ -3,6 +3,5 @@
    remote_user: vagrant
    roles:
    - aws-cli
-   - aws-emr-cli
    - {role: postgres, install_postgres_server: false }
  
