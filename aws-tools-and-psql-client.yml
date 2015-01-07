@@ -4,4 +4,5 @@
    roles:
    - aws-cli
    - aws-emr-cli
-   
+   - {role: postgres, install_postgres_server: false }
+ 
