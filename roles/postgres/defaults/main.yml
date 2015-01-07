@@ -1,2 +1,3 @@
 ---
 postgres_version: 8.4
+install_postgres_server: true

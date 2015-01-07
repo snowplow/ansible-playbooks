@@ -1,6 +1,10 @@
 ---
  - hosts: vagrant
    remote_user: vagrant
+   vars:
+   - install_postgres_server: false # Only install psql client - useful in conjunction with AWS tools
    roles:
+   - postgres    # Often used in conjunction with awscli to perform operations on Redshift clusters and RDS instances
    - aws-cli
    - aws-emr-cli
+   
