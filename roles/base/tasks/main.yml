@@ -19,6 +19,8 @@
         - unzip
         - python-pip
         - python-psycopg2
+        - mercurial
+        - git
 
     - name: Ensure that ansible_cache_dir directory exists
       file: path={{ ansible_cache_dir }} state=directory
