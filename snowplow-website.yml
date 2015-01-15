@@ -19,3 +19,4 @@
    remote_user: vagrant
    roles:
    - jekyll
+
