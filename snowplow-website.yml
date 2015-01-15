@@ -15,8 +15,8 @@
   roles:
   - rvm_io.rvm1-ruby
 
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - jekyll
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+  - jekyll
 
