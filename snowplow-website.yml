@@ -1,6 +1,21 @@
 ---
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+  - base
+
+- hosts: vagrant
+  remote_user: vagrant
+  sudo: yes
+  vars:
+    rvm1_rubies:
+    - 'ruby-1.9.3'
+    rvm1_rvm_version: 'stable'
+    rvm1_rvm_check_for_updates: True
+  roles:
+  - rvm_io.rvm1-ruby
+
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - ruby-rvm
    - jekyll
