@@ -1,0 +1,4 @@
+---
+- name: Install native LZO libraries
+  sudo: yes
+  apt: pkg=lzop,liblzo2-dev state=latest
