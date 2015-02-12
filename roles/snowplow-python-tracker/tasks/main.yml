@@ -94,3 +94,7 @@
 
 - name: Install the packages specified in requirements.txt
   pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-2.7-tracker-environment
+
+- name: Install redis-server
+  sudo: yes
+  action: apt pkg=redis-server
