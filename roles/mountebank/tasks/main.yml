@@ -1,11 +1,34 @@
 ---
-- name: mountebank | Install mountebank dependencies
+# For some reason NPM install of Mountebank refuses to work.
+# We need to download and extract Mountebank manually.
+# Source: https://s3.amazonaws.com/mountebank/v1.2/mountebank-v1.2.30-linux-x64.tar.gz
+
+- name: mountebank | Install Mountebank dependencies
   apt: pkg={{item}} state=present update_cache=yes
   with_items:
     - nodejs
     - npm
   sudo: yes
 
-- name: mountebank | Download and install mountebank
-  shell: "npm install -g mountebank --production"
+- name: mountebank | Create Mountebank Install Directory
+  file: state=directory path=/vagrant/mountebank/
+  sudo: yes
+
+- name: mountebank | Check if Mountebank Archive is already downloaded
+  local_action: stat path=/vagrant/mountebank/mountebank-v1.2.30-linux-x64.tar.gz
+  register: mountebank_archive_exists
+
+- name: mountebank | Download Mountebank Source
+  get_url: url=https://s3.amazonaws.com/mountebank/v1.2/mountebank-v1.2.30-linux-x64.tar.gz dest=/vagrant/mountebank/
+  when: not mountebank_archive_exists.stat.exists
+  sudo: yes
+
+- name: mountebank | Unzip Mountebank Install
+  unarchive: copy=no src=/vagrant/mountebank/mountebank-v1.2.30-linux-x64.tar.gz dest=/vagrant/mountebank/
+  sudo: yes
+
+- name: mountebank | Add Mountebank Directory to environment variables
+  lineinfile:
+    dest="/home/vagrant/.bashrc"
+    line="export PATH=$PATH:/vagrant/mountebank/mountebank-v1.2.30-linux-x64"
   sudo: yes
