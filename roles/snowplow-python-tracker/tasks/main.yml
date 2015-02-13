@@ -26,9 +26,6 @@
   shell: chdir=/var/local/ansible-cache tar xJf ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
   sudo: yes
 
-- name: Add library dependencies
-  shell: chdir=/opt/Python-3.3.5 sed "s:'/lib64':'/lib64','/usr/lib/x86_64-linux-gnu','/usr/lib/i386-linux-gnu':" -i.bak setup.py
-
 - name: Ensure Python 3.3 is configured
   shell: chdir=/opt/Python-3.3.5 ./configure --with-zlib --prefix=/opt/python3.3
 
@@ -54,9 +51,6 @@
 - name: Ensure Python 2.7 is extracted
   shell: chdir=/var/local/ansible-cache tar xJf ./Python-2.7.6.tar.xz -C /opt creates=/opt/Python-2.7.6
   sudo: yes
-
-- name: Add library dependencies
-  shell: chdir=/opt/Python-2.7.6 sed "s:'/lib64':'/lib64','/usr/lib/x86_64-linux-gnu','/usr/lib/i386-linux-gnu':" -i.bak setup.py
 
 - name: Ensure Python 2.7 is configured
   shell: chdir=/opt/Python-2.7.6 ./configure --with-zlib --prefix=/opt/python2.7
