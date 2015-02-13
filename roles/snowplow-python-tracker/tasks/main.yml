@@ -26,6 +26,9 @@
   sudo: yes
 
 - name: Ensure Python 3.3 is configured
+  shell: chdir=/opt/Python-3.3.5 sed "s:'/lib64':'/lib64','/usr/lib/x86_64-linux-gnu','/usr/lib/i386-linux-gnu':" -i.bak setup.py
+
+- name: Ensure Python 3.3 is configured
   shell: chdir=/opt/Python-3.3.5 ./configure --with-zlib --prefix=/opt/python3.3
 
 - name: Configure build to include zlib
