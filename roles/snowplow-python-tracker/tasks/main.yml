@@ -12,6 +12,7 @@
     - bzip2
     - libbz2-dev
     - libssl-dev
+    - redis-server
 
 - name: Ensure ansible-cache directory exists
   shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
@@ -27,7 +28,7 @@
   sudo: yes
 
 - name: Ensure Python 3.3 is configured
-  shell: chdir=/opt/Python-3.3.5 ./configure --with-zlib --prefix=/opt/python3.3
+  shell: chdir=/opt/Python-3.3.5 ./configure --prefix=/opt/python3.3
 
 - name: Ensure Python 3.3 make'd
   shell: chdir=/opt/Python-3.3.5 make
@@ -46,7 +47,7 @@
   sudo: yes
 
 - name: Ensure Python 2.7 is configured
-  shell: chdir=/opt/Python-2.7.6 ./configure --with-zlib --prefix=/opt/python2.7
+  shell: chdir=/opt/Python-2.7.6 ./configure --prefix=/opt/python2.7
 
 - name: Ensure Python 2.7 make'd
   shell: chdir=/opt/Python-2.7.6 make
@@ -89,7 +90,3 @@
 
 - name: Install the packages specified in requirements.txt in the Python 2.7 environment
   pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-2.7-tracker-environment
-
-- name: Install redis-server
-  sudo: yes
-  action: apt pkg=redis-server
