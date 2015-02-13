@@ -29,13 +29,6 @@
 - name: Ensure Python 3.3 is configured
   shell: chdir=/opt/Python-3.3.5 ./configure --with-zlib --prefix=/opt/python3.3
 
-- name: Configure build to include zlib
-  shell: "chdir=/opt/Python-3.3.5 sed s/#zlib/zlib/ -i.bak Modules/Setup"
-
-- name: Make zlib
-  shell: chdir=/opt/Python-3.3.5/Modules/zlib ./configure && make && make install
-  sudo: yes
-
 - name: Ensure Python 3.3 make'd
   shell: chdir=/opt/Python-3.3.5 make
 
