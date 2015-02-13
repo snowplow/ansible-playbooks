@@ -18,7 +18,7 @@
   shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
   sudo: yes
 
-# Install Pyton 3.3
+# Install Python 3.3
 - name: Download Python 3.3
   get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz 
   sudo: yes
@@ -62,7 +62,7 @@
   sudo: yes
 
 # Setup a Python 3.3 virtual environment to run the tracker
-- name: Setup a environment for the tracker using Python 3.3
+- name: Setup an environment for the tracker using Python 3.3
   shell: virtualenv -p /opt/python3.3/bin/python3.3 ~/snowplow-python-3.3-tracker-environment
 
 - name: Install packages required for the Python Tracker in the Python 3.3 environment
@@ -77,7 +77,7 @@
   pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-3.3-tracker-environment
 
 # Setup a Python 2.7 virtual environment to run the tracker
-- name: Setup a environment for the tracker using Python 2.7
+- name: Setup an environment for the tracker using Python 2.7
   shell: virtualenv -p /opt/python2.7/bin/python2.7 ~/snowplow-python-2.7-tracker-environment
 
 - name: Install packages required for the Python Tracker in the Python 2.7 environment 
