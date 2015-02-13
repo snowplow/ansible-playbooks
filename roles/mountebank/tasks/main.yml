@@ -1,0 +1,11 @@
+---
+- name: mountebank | Install mountebank dependencies
+  apt: pkg={{item}} state=present update_cache=yes
+  with_items:
+    - nodejs
+    - npm
+  sudo: yes
+
+- name: mountebank | Download and install mountebank
+  shell: "npm install -g mountebank --production"
+  sudo: yes
