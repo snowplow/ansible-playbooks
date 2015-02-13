@@ -25,8 +25,15 @@
   shell: chdir=/var/local/ansible-cache tar xJf ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
   sudo: yes
 
+- name: Configure build to include zlib
+  shell: "chdir=/opt/Python-3.3.5 sed s/#zlib/zlib/ -i.bak Modules/Setup"
+
+- name: Make zlib
+  shell: chdir=/opt/Python-3.3.5/Modules/zlib ./configure && make && make install
+  sudo: yes
+
 - name: Ensure Python 3.3 is configured
-  shell: chdir=/opt/Python-3.3.5 ./configure --prefix=/opt/python3.3
+  shell: chdir=/opt/Python-3.3.5 ./configure --with-zlib --prefix=/opt/python3.3
 
 - name: Ensure Python 3.3 make'd
   shell: chdir=/opt/Python-3.3.5 make
@@ -45,7 +52,7 @@
   sudo: yes
 
 - name: Ensure Python 2.7 is configured
-  shell: chdir=/opt/Python-2.7.6 ./configure --prefix=/opt/python2.7
+  shell: chdir=/opt/Python-2.7.6 ./configure --with-zlib --prefix=/opt/python2.7
 
 - name: Ensure Python 2.7 make'd
   shell: chdir=/opt/Python-2.7.6 make
