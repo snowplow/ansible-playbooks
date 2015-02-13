@@ -73,12 +73,6 @@
   shell: ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts 
   sudo: yes
 
-- name: Ensure directory to clone the repo in exists
-  shell: mkdir /vagrant/snowplow-python-tracker creates=/vagrant/snowplow-python-tracker
-
-- name: Clone snowplow-python-tracker repo into the VM
-  git: repo=https://github.com/snowplow/snowplow-python-tracker.git dest=/vagrant/snowplow-python-tracker
-
 # Setup a Python 3.3 virtual environment to run the tracker
 - name: Setup a environment for the tracker using Python 3.3
   shell: virtualenv -p /opt/python3.3/bin/python3.3 /vagrant/snowplow-python-3.3-tracker-environment
@@ -92,7 +86,7 @@
     - pytest
 
 - name: Install the packages specified in requirements.txt in the Python 3.3 environment
-  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-3.3-tracker-environment
+  pip: requirements=/vagrant/requirements.txt virtualenv=/vagrant/snowplow-python-3.3-tracker-environment
 
 # Setup a Python 2.7 virtual environment to run the tracker
 - name: Setup a environment for the tracker using Python 2.7
@@ -106,8 +100,8 @@
     - freezegun
     - pytest
 
-- name: Install the packages specified in requirements.txt
-  pip: requirements=/vagrant/snowplow-python-tracker/requirements.txt virtualenv=/vagrant/snowplow-python-2.7-tracker-environment
+- name: Install the packages specified in requirements.txt in the Python 2.7 environment
+  pip: requirements=/vagrant/requirements.txt virtualenv=/vagrant/snowplow-python-2.7-tracker-environment
 
 - name: Install redis-server
   sudo: yes
