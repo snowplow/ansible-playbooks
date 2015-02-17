@@ -40,7 +40,11 @@
   action: file path={{ user_home.stdout }}/opt/{{ android_folder }} recurse=yes state=directory owner={{ user_name.stdout }} group={{ user_group.stdout }}
 
 - name: install android platform-tools
-  action: shell creates={{ user_home.stdout }}/opt/android-sdk-linux/platform-tools echo y | {{ user_home.stdout }}/opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter platform-tool-19.1.0,build-tools-19.1.0,android-19,105,106,99,98,16,4,2
+  action: shell creates={{ user_home.stdout }}/opt/android-sdk-linux/platform-tools echo y | {{ user_home.stdout }}/opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter extra-android-support,platform-tool-19.1.0,build-tools-19.1.0,android-19,105,106,99,98,16,4,2
+  sudo: no
+
+- name: install android default image
+  shell: "echo y | {{ user_home.stdout }}/opt/android-sdk-linux/tools/android update sdk -a -u -t sys-img-x86-android-19"
   sudo: no
 
 - name: add ANDROID_HOME
