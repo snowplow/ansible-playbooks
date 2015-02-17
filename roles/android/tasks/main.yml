@@ -44,7 +44,7 @@
   sudo: no
 
 - name: install android default image
-  shell: echo "y" | android update sdk -a -u -t sys-img-x86-android-19
+  shell: "echo y | {{ user_home.stdout }}/opt/android-sdk-linux/tools/android update sdk -a -u -t sys-img-x86-android-19"
   sudo: no
 
 - name: add ANDROID_HOME
