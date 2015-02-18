@@ -1,7 +1,11 @@
 ---
-  - name: Install PyCurl (required for apt-repository updates)
-    apt: pkg=python-pycurl
+  - name: Dependencies | Ensure packages for installing and using Java installed
     sudo: yes
+    apt: pkg={{ item }} state=installed
+    with_items:
+      - python-pycurl
+      - ant
+      - maven
 
   - name: Install Oracle Java Repo Installer Repository
     apt_repository: repo=ppa:webupd8team/java update-cache=yes 

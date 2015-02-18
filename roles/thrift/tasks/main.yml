@@ -20,7 +20,6 @@
     - pkg-config
     - g++
     - libssl-dev
-    - ant
 
 - name: Install | Ensure Thrift source downloaded
   get_url: dest={{ansible_cache_dir}} url={{thrift_download_location}}
