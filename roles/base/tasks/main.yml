@@ -16,6 +16,7 @@
         - vim
         - libxslt1-dev 
         - libxml2-dev
+        - zip
         - unzip
         - python-pip
         - python-psycopg2
