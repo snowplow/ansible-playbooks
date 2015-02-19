@@ -20,6 +20,7 @@
         - unzip
         - python-pip
         - python-psycopg2
+        - apg
         - mercurial
         - git
 
