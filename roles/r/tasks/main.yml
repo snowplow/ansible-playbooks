@@ -1,6 +1,9 @@
 ---
 - include: add-apt-repo-for-r.yml
 
+- name: Update all packages
+  apt: update_cache=yes
+
 - name: install R packages 
   sudo: yes
   apt: pkg={{ item }} state=installed update_cache=yes
