@@ -3,6 +3,6 @@
 # For details see https://wiki.postgresql.org/wiki/Apt
 
 - name: Add R repo to sources list
-  apt_repository: repo='ppa:marutter/rrutter' state=present
+  apt_repository: repo='deb http://cran.ma.imperial.ac.uk/bin/linux/ubuntu trusty' state=present
   sudo: yes
 
