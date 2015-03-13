@@ -3,6 +3,8 @@
 # For details see https://wiki.postgresql.org/wiki/Apt
 
 - name: Add R repo to sources list
-  apt_repository: repo='deb http://cran.ma.imperial.ac.uk/bin/linux/ubuntu trusty' state=present
+  apt_repository: repo='deb http://cran.ma.imperial.ac.uk/bin/linux/ubuntu trusty/' state=present
   sudo: yes
 
+- name: Add key for R repo
+  apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
