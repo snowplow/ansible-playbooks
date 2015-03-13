@@ -7,4 +7,4 @@
   sudo: yes
 
 - name: Add key for R repo
-  apt_key: keyserver=keyserver.ubuntu.com id=E084DAB9
+  apt_key: id=E084DAB9 keyserver=keyserver.ubuntu.com state=present
