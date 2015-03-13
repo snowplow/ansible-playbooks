@@ -14,7 +14,7 @@
   sudo: yes
 
 - name: Download rstudio-server
-  get_url: url=http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb
+  get_url: url=http://download2.rstudio.org/rstudio-server-0.98.1103-amd64.deb dest=/var/local/ansible-cache/rstudio-server-0.98.1103-amd64.deb
   sudo: yes
 
 - name: Install RStudio Server 
