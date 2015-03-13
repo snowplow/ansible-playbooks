@@ -3,6 +3,7 @@
 
 - name: Update all packages
   apt: update_cache=yes
+  sudo: yes
 
 - name: install R packages 
   sudo: yes
