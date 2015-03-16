@@ -19,7 +19,7 @@
 
 # Install Python 
 - name: Download Python {{ python_version }}
-  get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-{{ python_version }}.tar.xz 
+  get_url: dest=/var/local/ansible-cache url=https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tar.xz
   sudo: yes
 
 - name: Ensure Python {{ python_version }} is extracted
