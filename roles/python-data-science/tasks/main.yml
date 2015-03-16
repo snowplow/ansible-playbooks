@@ -1,0 +1,73 @@
+---
+- name: Install dependencies required to setup a new version of Python
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  tags: [packages]
+  with_items:
+    - build-essential
+    - libsqlite3-dev
+    - sqlite3 # for the command line client
+    - libxml2-dev
+    - bzip2
+    - libbz2-dev
+    - libssl-dev
+    - redis-server
+
+- name: Ensure ansible-cache directory exists
+  shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
+  sudo: yes
+
+# Install Python 
+- name: Download Python {{ python_version }}
+  get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-{{ python_version }}.tar.xz 
+  sudo: yes
+
+- name: Ensure Python {{ python_version }} is extracted
+  shell: chdir=/var/local/ansible-cache tar xJf ./Python-{{ python_version }}.tar.xz -C /opt creates=/opt/Python-{{ python_version }}
+  sudo: yes
+
+- name: Ensure Python {{ python_version }}is configured
+  shell: chdir=/opt/Python-{{ python_version }} ./configure --prefix=/opt/python{{ python_version }}
+
+- name: "Ensure Python {{ python_version }} make'd"
+  shell: chdir=/opt/Python-{{ python_version }} make
+
+- name: Ensure Python {{ python_version }} installed
+  shell: chdir=/opt/Python-{{ python_version }} make install  # Need to add a 'creates=' flag here
+  sudo: yes
+
+# Install required packages for data science
+- name: Install required packages for data science
+  sudo: yes
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python-scipy
+    - libblas-dev
+    - liblapack-dev
+    - gfortran
+    - libffi-dev
+
+# Setup a Python virtual environment to run the tracker
+- name: Setup an environment for data science
+  shell: virtualenv -p /opt/python{{ python_version }}/bin/python{{ python_version }} ~/python-data-science-environment
+
+- name: Install packages required for the data science in the environment
+  pip: name={{ item }} virtualenv="~/python-data-science-environment"
+  with_items: 
+    - numpy
+    - scipy
+    - scikit-learn
+    - pandas
+    - patsy
+    - statsmodels
+    - ipython tornado pyzmq
+    - networkx
+    - gensim
+    - scrapy
+    - numexpr bottleneck
+    - sqlalchemy
+    - nltk
+    - seaborn
+
+# - name: Install the packages specified in requirements.txt in the Python 3.3 environment
+#   pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-3.3-tracker-environment
