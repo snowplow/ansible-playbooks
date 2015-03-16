@@ -60,7 +60,9 @@
     - pandas
     - patsy
     - statsmodels
-    - ipython tornado pyzmq
+    - ipython 
+    - tornado 
+    - pyzmq
     - networkx
     - gensim
     - scrapy
