@@ -48,11 +48,11 @@
     - libffi-dev
 
 # Setup a Python virtual environment to run the tracker
-- name: Setup an environment for data science
-  shell: virtualenv -p /opt/python{{ python_version }}/bin/python{{ python_version }} ~/python-data-science-environment
+#- name: Setup an environment for data science
+#  shell: /opt/python{{ python_version }}/bin/pyvenv-{{ python_version_major_minor }} python-data-science-environment chdir=/home/vagrant
 
 - name: Install packages required for the data science in the environment
-  pip: name={{ item }} virtualenv="~/python-data-science-environment"
+  pip: name={{ item }} virtualenv_command=/opt/python{{ python_version }}/bin/pyvenv virtualenv="/vagrant/home/python-data-science-environment"
   with_items: 
     - numpy
     - scipy

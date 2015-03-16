@@ -1,2 +1,3 @@
 ---
 python_version: 3.4.2
+python_version_major_minor: 3.4 # should be compatible with python_version listed above
