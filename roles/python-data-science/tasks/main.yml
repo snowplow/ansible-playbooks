@@ -46,13 +46,16 @@
     - liblapack-dev
     - gfortran
     - libffi-dev
+    - pkg-config
+    - libfreetype6-dev
+    - libpng-dev
 
 # Setup a Python virtual environment to run the tracker
 #- name: Setup an environment for data science
 #  shell: /opt/python{{ python_version }}/bin/pyvenv-{{ python_version_major_minor }} python-data-science-environment chdir=/home/vagrant
 
 - name: Install packages required for the data science in the environment
-  pip: name={{ item }} virtualenv_command=/opt/python{{ python_version }}/bin/pyvenv virtualenv="/vagrant/home/python-data-science-environment"
+  pip: name={{ item }} virtualenv_command=/opt/python{{ python_version }}/bin/pyvenv virtualenv="/home/vagrant/python-data-science-environment"
   with_items: 
     - numpy
     - scipy
@@ -71,6 +74,8 @@
     - sqlalchemy
     - nltk
     - seaborn
+    - Jinja2
+    - jsonschema
 
 # - name: Install the packages specified in requirements.txt in the Python 3.3 environment
 #   pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-3.3-tracker-environment
