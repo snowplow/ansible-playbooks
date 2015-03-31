@@ -76,6 +76,7 @@
     - seaborn
     - Jinja2
     - jsonschema
+    - psycopg2
 
 # - name: Install the packages specified in requirements.txt in the Python 3.3 environment
 #   pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-3.3-tracker-environment
