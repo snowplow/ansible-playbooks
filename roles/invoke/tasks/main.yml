@@ -1,0 +1,4 @@
+---
+- name: Install Invoke (Python rakelike) via Pip
+  pip: name=invoke
+  sudo: yes
