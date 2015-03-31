@@ -12,6 +12,8 @@
     - libbz2-dev
     - libssl-dev
     - redis-server
+    - libpq-dev
+    - python-dev
 
 - name: Ensure ansible-cache directory exists
   shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
