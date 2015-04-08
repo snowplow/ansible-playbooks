@@ -8,13 +8,14 @@
   shell: id -g -n
   register: user_group
 
-- name: Install | Ensure curl is installed (used to download RVM)
+- name: Install | Ensure dependencies installed 
   apt: pkg={{ item }} state=installed
   tags: [packages]
   sudo: yes
   with_items:
     - curl
     - libpq-dev
+    - ruby-dev
 
 - name: Install | Ensure RVM signature is installed
   shell: "gpg --keyserver hkp://keys.gnupg.net --recv-keys {{rvm_signature}}"
