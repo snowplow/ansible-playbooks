@@ -1,0 +1,11 @@
+---
+# First install bundler
+- name: Install Bundler
+  gem: name=bundler state=present version=latest
+
+# Second run bundle install in the /vagrant folder (assumes a suitable Gemfile is available there)
+- name: Install github pages in project folder
+  shell: bundle install 
+    args:
+      chdir: /vagrant/
+
