@@ -7,8 +7,6 @@ rvm1_default_ruby_version: '{{ rvm1_rubies | last if rvm1_rubies and rvm1_rubies
 rvm1_rvm: '{{ rvm1_install_path }}/bin/rvm'
 
 rvm1_symlink_binaries:
-  - 'bundle'
-  - 'bundler'
   - 'erb'
   - 'executable-hooks-uninstaller'
   - 'gem'
