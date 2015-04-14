@@ -9,7 +9,7 @@
   sudo: yes
   vars:
     rvm1_rubies:
-    - 'ruby-1.9.3'
+    - 'ruby-2.0.0'
     rvm1_rvm_version: 'stable'
     rvm1_rvm_check_for_updates: True
   roles:
