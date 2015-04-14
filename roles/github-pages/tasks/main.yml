@@ -5,7 +5,4 @@
 
 # Second run bundle install in the /vagrant folder (assumes a suitable Gemfile is available there)
 - name: Install github pages in project folder
-  shell: bundle install 
-    args:
-      chdir: /vagrant/
-
+  command: chdir="/vagrant/" bundle install
