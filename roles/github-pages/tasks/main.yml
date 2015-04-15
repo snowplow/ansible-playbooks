@@ -4,9 +4,10 @@
   sudo: yes
 
 - name: Install Bundler
-  gem: name=bundler state=present
+  # gem: name=bundler state=present
+  command: gem install bundler
   sudo: yes 
 
 - name: Install github pages in project folder
-  command: chdir="/vagrant/" bundle install
+  command: bundle install chdir=/vagrant
   sudo: yes
