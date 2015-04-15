@@ -1,3 +1,5 @@
+Props to: https://github.com/rvm/rvm1-ansible
+
 ## What is rvm1-ansible? [![Build Status](https://secure.travis-ci.org/rvm/rvm1-ansible.png)](http://travis-ci.org/rvm/rvm1-ansible)
 
 It is an [Ansible](http://www.ansible.com/home) role to install and manage ruby versions using rvm.

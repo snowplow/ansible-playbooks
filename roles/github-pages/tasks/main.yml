@@ -9,5 +9,5 @@
   sudo: yes 
 
 - name: Install github pages in project folder
-  command: bundle install chdir=/vagrant
+  shell: /usr/local/rvm/gems/ruby-2.0.0-p643/wrappers/bundle install chdir=/vagrant
   sudo: yes
