@@ -1,0 +1,6 @@
+---
+ - hosts: vagrant
+   remote_user: vagrant
+   roles:
+   - { role: oracle-java, oracle_java_version: 7 }
+   - spark

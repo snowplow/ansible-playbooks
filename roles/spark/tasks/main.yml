@@ -1,0 +1,7 @@
+---
+# Download Spark tar
+- name: download Spark
+  get_url: url=http://d3kbcqa49mib13.cloudfront.net/{{ spark_download_filename }} dest=/vagrant/{{ spark_download_filename }} 
+
+- name: Unpack spark
+  unarchive: src=/vagrant/{{ spark_download_filename }} dest=/vagrant/ copy=no
