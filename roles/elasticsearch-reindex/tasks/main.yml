@@ -1,0 +1,14 @@
+---
+- name: Get correct version of Nodejs available
+  shell: "curl -sL https://deb.nodesource.com/setup | sudo bash -"
+  sudo: yes
+
+- name: Install Nodejs
+  apt: pkg={{item}} state=present
+  with_items:
+    - nodejs
+  sudo: yes
+
+- name: Install elasticsearch-reindex
+  shell: npm install -g elasticsearch-reindex
+  sudo: yes
