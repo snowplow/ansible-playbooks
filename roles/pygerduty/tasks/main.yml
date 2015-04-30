@@ -1,0 +1,4 @@
+---
+- name: Install Pygerduty via Pip
+  pip: name=pygerduty
+  sudo: yes
