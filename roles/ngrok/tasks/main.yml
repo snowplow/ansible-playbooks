@@ -1,0 +1,23 @@
+---
+- name: ngrok | Create Ngrok Install Directory
+  file: state=directory path=/opt/ngrok/
+  sudo: yes
+
+- name: ngrok | Check if Ngrok Archive is already downloaded
+  local_action: stat path=/opt/ngrok/ngrok_2.0.19_linux_amd64.zip
+  register: ngrok_archive_exists
+
+- name: ngrok | Download Ngrok Source
+  get_url: url=https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip dest=/opt/ngrok/
+  when: not ngrok_archive_exists.stat.exists
+  sudo: yes
+
+- name: ngrok | Unzip Ngrok Install
+  unarchive: copy=no src=/opt/ngrok/ngrok_2.0.19_linux_amd64.zip dest=/opt/ngrok/
+  sudo: yes
+
+- name: ngrok | Add Ngrok Directory to environment variables
+  lineinfile:
+    dest="/home/vagrant/.bashrc"
+    line="export PATH=$PATH:/opt/ngrok/"
+  sudo: yes
