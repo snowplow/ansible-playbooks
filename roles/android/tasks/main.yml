@@ -52,6 +52,7 @@
     - "android-19"
     - "sys-img-x86-android-21"
     - "sys-img-x86-android-19"
+    - "sys-img-armeabi-v7a-android-19"
     - "addon-google_apis-google-22"
     - "extra-android-support"
     - "extra-google-m2repository"
