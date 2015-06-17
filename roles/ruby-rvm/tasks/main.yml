@@ -23,5 +23,5 @@
 - name: Install | Ensure RVM is installed
   shell: curl -L {{rvm_download_location}} | bash -s stable --ruby creates=/home/{{user_name.stdout}}/.rvm
 
-- name: Install | Ensure Ruby 1.9.3 is installed as default
+- name: Install | Ensure JRuby is installed as default
   shell: '/home/{{user_name.stdout}}/.rvm/bin/rvm install --default {{ruby_version}} creates=/usr/local/rvm/rubies/{{ruby_version}}'
