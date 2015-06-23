@@ -1,0 +1,3 @@
+---
+- name: Install JQ package via apt-get
+  apt: name=jq
