@@ -1,0 +1,4 @@
+---
+- name: Gulp | Gulp CLI install
+  shell: npm install -g gulp-cli
+  sudo: yes
