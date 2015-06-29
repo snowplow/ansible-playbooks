@@ -1,0 +1,4 @@
+---
+- name: Docker | Install latest docker 
+  sudo: yes
+  apt: pkg=docker.io state=latest
