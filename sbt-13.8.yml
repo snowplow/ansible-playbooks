@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - sbt
+   - sbt-13.8
