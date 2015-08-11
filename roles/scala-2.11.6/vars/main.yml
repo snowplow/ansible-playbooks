@@ -1,0 +1,3 @@
+---
+scala_tarball: "scala-{{scala_version}}.tgz"
+scala_download_location: "http://www.scala-lang.org/files/archive/{{scala_tarball}}"
