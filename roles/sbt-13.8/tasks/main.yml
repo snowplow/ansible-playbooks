@@ -1,0 +1,12 @@
+---
+- name: Install | Download SBT
+  get_url: dest={{ansible_cache_dir}} url={{sbt_download_location}}
+  sudo: yes
+
+- name: Install | Extract SBT
+  shell: tar xzf {{ansible_cache_dir}}/{{sbt_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/sbt
+  sudo: yes
+
+- name: Configure | Add SBT executable symlinks to path
+  shell: for f in sbt sbt-launch.jar; do ln -s {{software_install_dir}}/sbt/bin/$f {{user_binaries}}/$f; done; creates={{user_binaries}}/sbt
+  sudo: yes

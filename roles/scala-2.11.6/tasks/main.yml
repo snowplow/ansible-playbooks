@@ -1,0 +1,16 @@
+---
+- name: Install | Download Scala
+  get_url: dest={{ansible_cache_dir}} url={{scala_download_location}}
+  sudo: yes
+
+- name: Install | Extract Scala
+  shell: tar xzf {{ansible_cache_dir}}/{{scala_tarball}} -C {{software_install_dir}} creates={{software_install_dir}}/scala-{{scala_version}}
+  sudo: yes
+
+- name: Configure | Add Scala executable symlinks to path
+  shell: for f in fsc scala scalac scaladoc scalap; do ln -s {{software_install_dir}}/scala-{{scala_version}}/bin/$f {{user_binaries}}/$f; done; creates={{user_binaries}}/scala
+  sudo: yes
+
+- name: Configure | Update Scala environment variables
+  sudo: no
+  lineinfile: line="export SCALA_HOME={{software_install_dir}}/scala-{{scala_version}}" dest="~/.bashrc" state=present regexp="export SCALA_HOME={{software_install_dir}}/scala-{{scala_version}}"
