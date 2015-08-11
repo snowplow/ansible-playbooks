@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-   - scala
+   - scala-2.11.6
