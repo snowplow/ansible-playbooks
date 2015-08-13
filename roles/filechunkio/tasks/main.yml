@@ -1,0 +1,4 @@
+---
+- name: Install FileChunkIO via Pip
+  pip: name=filechunkio
+  sudo: yes
