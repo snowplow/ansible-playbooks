@@ -1,4 +1,3 @@
 ---
 - name: Install | Install beta binaries for Rust
-  shell: curl -s {{installer_location}} | sudo sh
-  sudo: yes
+  shell: curl -sSf {{installer_location}} | sh
