@@ -17,6 +17,7 @@
         - libxslt1-dev 
         - libxml2-dev
         - zip
+        - libssl-dev
         - unzip
         - python-pip
         - python-psycopg2
