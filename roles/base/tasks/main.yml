@@ -17,7 +17,6 @@
         - libxslt1-dev 
         - libxml2-dev
         - zip
-        - install
         - libssl-dev
         - unzip
         - python-pip
