@@ -1,0 +1,9 @@
+---
+- name: Wine | Install Wine and all Dependencies
+  command: "{{ item }}" 
+  sudo: yes
+  with_items:
+    - "dpkg --add-architecture i386"
+    - "add-apt-repository ppa:ubuntu-wine/ppa"
+    - "apt-get update"
+    - "apt-get install -y wine1.7"
