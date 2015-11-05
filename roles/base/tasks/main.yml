@@ -29,8 +29,12 @@
   file: path={{ ansible_cache_dir }} state=directory
   sudo: yes
 
-- name: Add Google DNS Server
+- name: Add Google DNS nameserver
   lineinfile:
     dest="/etc/resolvconf/resolv.conf.d/base"
     line="nameserver 8.8.8.8"
+  sudo: yes
+
+- name: Update nameserver list
+  command: "resolvconf -u"
   sudo: yes
