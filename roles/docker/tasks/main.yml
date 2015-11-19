@@ -1,4 +1,7 @@
 ---
-- name: Docker | Install latest docker 
+- name: Docker | Install Docker 1.9+
   sudo: yes
-  apt: pkg=docker.io state=latest
+  shell: "{{item}}"
+  with_items:
+    - "curl -sSL https://get.docker.com/ | sh"
+    - "usermod -a -G docker $USER"
