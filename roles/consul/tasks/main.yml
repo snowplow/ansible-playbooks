@@ -1,0 +1,12 @@
+---
+- name: Download Consul
+  sudo: yes
+  get_url: url={{ consul_url }} dest={{ consul_install_dir }}
+
+- name: Extract Consul
+  sudo: yes
+  unarchive: copy=no src={{ consul_install_dir }}/{{ consul_archive }}.zip dest={{ consul_install_dir }}
+
+- name: Remove downloaded consul_archive
+  sudo: yes
+  shell: "rm -f {{ consul_install_dir }}/{{ consul_archive }}.zip"
