@@ -16,4 +16,7 @@
 
 - name: Docker | Install Docker 1.9.0
   sudo: yes
-  shell: "apt-get install -y docker-engine=1.9.0-0~trusty"
+  shell: "{{item}}"
+  with_items:
+    - "apt-get update"
+    - "apt-get install -y docker-engine=1.9.0-0~trusty"
