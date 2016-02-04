@@ -1,0 +1,12 @@
+---
+- name: Download Packer
+  sudo: yes
+  get_url: url={{ packer_url }} dest={{ packer_install_dir }}
+
+- name: Extract Packer
+  sudo: yes
+  unarchive: copy=no src={{ packer_install_dir }}/{{ packer_archive }}.zip dest={{ packer_install_dir }}
+
+- name: Remove downloaded packer_archive
+  sudo: yes
+  shell: "rm -f {{ packer_install_dir }}/{{ packer_archive }}.zip"
