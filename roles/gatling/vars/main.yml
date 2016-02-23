@@ -1,0 +1,4 @@
+gatling_archive : "gatling-charts-highcharts-bundle-2.2.0-20160211.220805-391-bundle"
+gatling_version : "2.2.0-SNAPSHOT"
+gatling_url     : "https://oss.sonatype.org/content/repositories/snapshots/io/gatling/highcharts/gatling-charts-highcharts-bundle/{{ gatling_version }}/{{ gatling_archive }}.zip"
+install_dir     : "/vagrant/dist"
