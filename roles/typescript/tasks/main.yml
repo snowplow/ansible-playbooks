@@ -1,0 +1,8 @@
+---
+- name: Install Typescript and Browserify
+  command: "{{ item }}" 
+  sudo: yes
+  with_items:
+    - "npm install -g typescript@1.8.9"
+    - "npm install -g tsd@0.6.5"
+    - "npm install -g browserify@13.0.0"
