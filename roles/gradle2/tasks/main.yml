@@ -1,0 +1,16 @@
+---
+
+- name: Download Gradle {{gradle_version}}
+  get_url: dest="{{ ansible_cache_dir }}" url=https://services.gradle.org/distributions/{{gradle_zipfile}}
+  sudo: yes
+  tags: [gradle]
+
+- name: Extract Gradle
+  shell: unzip "{{ ansible_cache_dir }}/{{gradle_zipfile}}" -d /usr/local/share/ creates=/usr/local/share/{{gradle_folder}}
+  sudo: yes
+  tags: [gradle]
+
+- name: Add Gradle executable symlink to path
+  shell: ln -s /usr/local/share/{{gradle_folder}}/bin/gradle /usr/local/bin/gradle creates=/usr/local/bin/gradle
+  sudo: yes
+  tags: [gradle]
