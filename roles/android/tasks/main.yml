@@ -46,6 +46,7 @@
     - "platform-tools"
     - "build-tools-23.0.3"
     - "android-24"
+    - "android-19"
     - "sys-img-x86-android-19"
     - "sys-img-armeabi-v7a-android-19"
     - "extra-android-support"
