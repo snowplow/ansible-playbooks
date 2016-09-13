@@ -1,0 +1,12 @@
+---
+- name: Install pyenv via pyenv-installer
+  shell: curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash creates=/home/vagrant/.pyenv chdir=/home/vagrant 
+
+- name: Add pyenv to PATH
+  lineinfile: dest=/home/vagrant/.bashrc line='export PATH="~/.pyenv/bin:$PATH"' state=present
+
+- name: Add pyenv init
+  lineinfile: dest=/home/vagrant/.bashrc line='eval "$(pyenv init -)"' state=present
+
+- name: Add pyenv virtualenv init
+  lineinfile: dest=/home/vagrant/.bashrc line='eval "$(pyenv virtualenv-init -)"' state=present
