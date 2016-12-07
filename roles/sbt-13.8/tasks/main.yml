@@ -1,6 +1,6 @@
 ---
 - name: Install | Download SBT
-  get_url: dest={{ansible_cache_dir}} url={{sbt_download_location}}
+  shell: curl -o {{ansible_cache_dir}}/{{sbt_tarball}} {{sbt_download_location}}
   sudo: yes
 
 - name: Install | Extract SBT

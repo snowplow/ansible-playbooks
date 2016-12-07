@@ -1,7 +1,7 @@
 ---
 - name: Download Packer
   sudo: yes
-  get_url: url={{ packer_url }} dest={{ packer_install_dir }}
+  shell: curl -o {{ packer_install_dir }}/{{ packer_archive }}.zip {{ packer_url }}
 
 - name: Extract Packer
   sudo: yes

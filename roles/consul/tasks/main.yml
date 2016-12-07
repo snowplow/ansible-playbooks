@@ -1,7 +1,7 @@
 ---
 - name: Download Consul
   sudo: yes
-  get_url: url={{ consul_url }} dest={{ consul_install_dir }}
+  shell: curl -o {{ consul_install_dir }}/{{ consul_archive }}.zip {{ consul_url }}
 
 - name: Extract Consul
   sudo: yes

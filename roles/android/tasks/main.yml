@@ -25,7 +25,7 @@
     - lib32z1
 
 - name: download Android SDK
-  get_url: dest={{ ansible_cache_dir }} url=http://dl.google.com/android/{{ android_zipfile }}
+  shell: curl -o {{ ansible_cache_dir }}/{{ android_zipfile }} http://dl.google.com/android/{{ android_zipfile }}
   sudo: yes
 
 - name: make opt dir for user

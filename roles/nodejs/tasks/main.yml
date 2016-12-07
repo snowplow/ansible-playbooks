@@ -9,7 +9,7 @@
     action: apt pkg=g++
 
   - name: Node.js | Fetching node.js source
-    action: get_url url=http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }} dest=/tmp/
+    shell: curl -o /tmp/{{node_tarball}} http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }}
     when: wanted_version_installed.rc == 1
 
   - name: Node.js | Unpack node.js tarball

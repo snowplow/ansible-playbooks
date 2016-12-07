@@ -1,6 +1,6 @@
 ---
 - name: Install | Download Scala
-  get_url: dest={{ansible_cache_dir}} url={{scala_download_location}}
+  shell: curl -o {{ansible_cache_dir}}/{{scala_tarball}} {{scala_download_location}}
   sudo: yes
 
 - name: Install | Extract Scala
