@@ -13,13 +13,13 @@
     - libbz2-dev
     - libssl-dev
     - redis-server
+    - libffi-dev
 
 - name: Install packages required for Sphinx
-  pip: name={{ item }} virtualenv="~/snowplow-python-3.3-tracker-environment"
+  pip: name={{ item }}
   with_items: 
     - sphinx
     - sphinx-autobuild
-    - sphinxcontrib-spelling
     - nbsphinx
     - sphinx_rtd_theme
     - jupyter_sphinx_theme
