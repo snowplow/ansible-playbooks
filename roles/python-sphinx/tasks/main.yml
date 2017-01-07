@@ -17,10 +17,16 @@
 
 - name: Install packages required for Sphinx
   pip: name={{ item }}
-  with_items: 
+  with_items:
     - sphinx
     - sphinx-autobuild
     - nbsphinx
     - sphinx_rtd_theme
     - jupyter_sphinx_theme
+    - recommonmark
+
+- name: Install packages required for Sphinx requiring sudo
+  sudo: yes
+  pip: name={{ item }}
+  with_items:
     - recommonmark
