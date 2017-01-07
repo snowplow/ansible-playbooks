@@ -1,0 +1,12 @@
+---
+
+- name: Install packages required for Sphinx
+  pip: name={{ item }} virtualenv="~/snowplow-python-3.3-tracker-environment"
+  with_items: 
+    - sphinx
+    - sphinx-autobuild
+    - sphinxcontrib-spelling
+    - nbsphinx
+    - sphinx_rtd_theme
+    - jupyter_sphinx_theme
+    - recommonmark
