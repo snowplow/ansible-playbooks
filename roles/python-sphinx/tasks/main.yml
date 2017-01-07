@@ -19,7 +19,7 @@
   sudo: yes
   pip: name={{ item }}
   with_items:
-    - Sphinx
+    - sphinx==1.4.8
     - recommonmark
 
 - name: Install packages required for Sphinx
