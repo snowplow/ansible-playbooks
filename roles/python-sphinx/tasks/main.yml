@@ -15,18 +15,18 @@
     - redis-server
     - libffi-dev
 
-- name: Install packages required for Sphinx
-  pip: name={{ item }}
-  with_items:
-    - sphinx
-    - sphinx-autobuild
-    - nbsphinx
-    - sphinx_rtd_theme
-    - jupyter_sphinx_theme
-    - recommonmark
-
 - name: Install packages required for Sphinx requiring sudo
   sudo: yes
   pip: name={{ item }}
   with_items:
+    - Sphinx
+    - recommonmark
+
+- name: Install packages required for Sphinx
+  pip: name={{ item }}
+  with_items:
+    - sphinx-autobuild
+    - nbsphinx
+    - sphinx_rtd_theme
+    - jupyter_sphinx_theme
     - recommonmark
