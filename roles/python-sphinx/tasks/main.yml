@@ -26,3 +26,4 @@
     - sphinx_rtd_theme
     - jupyter_sphinx_theme
     - recommonmark
+    - contentful
