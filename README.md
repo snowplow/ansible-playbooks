@@ -108,7 +108,7 @@ Assign that user a password. On your host machine, you'll then be able to log in
 
 ## Copyright and license
 
-Snowplow Ansible Playbooks is copyright 2014 Snowplow Analytics Ltd.
+Snowplow Ansible Playbooks is copyright 2014-2017 Snowplow Analytics Ltd.
 
 Licensed under the [Apache License, Version 2.0] [license] (the "License");
 you may not use this software except in compliance with the License.
@@ -119,7 +119,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-[ansible]: http://www.ansibleworks.com/
+[ansible]: https://www.ansible.com/
 [ansible-roles-documentation]: http://docs.ansible.com/playbooks_roles.html
 [snowplow]: http://snowplowanalytics.com
 
