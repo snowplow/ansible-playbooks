@@ -1,0 +1,7 @@
+---
+ - hosts: vagrant
+   remote_user: vagrant
+   vars:
+     install_postgres_server: true
+   roles:
+   - postgres
