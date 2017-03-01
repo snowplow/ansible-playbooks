@@ -18,7 +18,8 @@
     - google-cloud-sdk
     - python-pip
     - python-openssl
+  sudo: yes
 
-- name: Installs crcmod
+- name: Installs crcmod and gcp python packages
   pip:
     name: crcmod google-cloud google-cloud-pubsub google-cloud-bigtable
