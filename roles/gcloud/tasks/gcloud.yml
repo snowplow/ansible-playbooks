@@ -19,30 +19,4 @@
 
 - name: Installs crcmod
   pip:
-    name: crcmod
-
-- name: Check if gcloud is configured
-  shell: "gcloud config list core/account | grep {{ gcloud_service_email }} || echo 'NO'"
-  changed_when: '"NO" in __gcloud_configured.stdout'
-  register: __gcloud_configured
-
-- name: Adds service account key
-  template:
-    src: servicekey.json.j2
-    dest: /tmp/servicekey.json
-  when: __gcloud_configured|changed
-
-- name: Activate service account
-  shell: "CLOUDSDK_PYTHON_SITEPACKAGES=1 gcloud auth activate-service-account {{ gcloud_service_email }} --key-file /tmp/servicekey.json"
-  when: __gcloud_configured|changed
-
-- name: Sets default project
-  command: gcloud config set core/project esante-d8-backup
-  when: __gcloud_configured|changed
-
-- name: Remove gcloud servicekey
-  file:
-    path: /tmp/servicekey.json
-    state: absent
-
-
+    name: crcmod google-cloud google-cloud-pubsub google-cloud-bigtable
