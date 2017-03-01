@@ -1,0 +1,16 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  author: Michel Blanc
+  company: ACME Corp 
+  description: ansible-gcloud role
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  categories:
+  - cloud

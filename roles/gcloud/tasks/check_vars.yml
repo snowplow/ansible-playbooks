@@ -1,0 +1,10 @@
+- name: Checking that required variables are set
+  fail: msg="{{ item }} is not defined"
+  when: not {{ item }}
+  with_items:
+    - gcloud_private_key_id
+    - gcloud_service_email
+    - gcloud_project_id
+    - gcloud_client_id
+    - gcloud_private_key
+
