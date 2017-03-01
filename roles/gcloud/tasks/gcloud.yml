@@ -18,6 +18,7 @@
     - google-cloud-sdk
     - python-pip
     - python-openssl
+    - python-dev
   sudo: yes
 
 - name: Installs crcmod and gcp python packages
