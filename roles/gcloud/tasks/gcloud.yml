@@ -2,11 +2,13 @@
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
+  sudo: yes
 
 - name: Adds gcloud repos
   apt_repository:
     repo: "deb http://packages.cloud.google.com/apt cloud-sdk-{{ ansible_distribution_release }} main"
     update_cache: yes
+  sudo: yes
 
 - name: Installs google-cloud-sdk
   apt:
