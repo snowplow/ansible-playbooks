@@ -1,4 +1,4 @@
 packer_version     : "0.12.3"
 packer_archive     : "packer_{{ packer_version }}_linux_amd64"
-packer_url         : "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_archive }}.zip"
+packer_url         : "http://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_archive }}.zip"
 packer_install_dir : "/usr/local/bin"
