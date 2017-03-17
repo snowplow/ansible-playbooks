@@ -2,4 +2,4 @@
  - hosts: vagrant
    remote_user: vagrant
    roles:
-       - { role: golang, golang_version: 1.7.4 }
+     - { role: golang, golang_version: 1.8 }
