@@ -2,4 +2,4 @@
 - hosts: vagrant
   remote_user: vagrant
   roles:
-    - { role: consul, consul_version: 0.5.2 }
+    - { role: consul, consul_version: 0.7.5 }
