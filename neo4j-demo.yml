@@ -15,6 +15,12 @@
   connection: local
   gather_facts: false
 
+  vars:
+    instance_type: "c3.xlarge"
+    security_groups: ['demo']
+    region: eu-west-1
+    image: { "m3.large": "ami-f4b11183", "c3.xlarge": "ami-f4b11183"}
+
   tasks:
     - name: Launch instance 
       local_action:
