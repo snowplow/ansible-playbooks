@@ -9,6 +9,7 @@
     - curl
     - vim
     - make
+    - libboost1.54-dev
     - libboost-dev
     - libboost-test-dev
     - libboost-program-options-dev
