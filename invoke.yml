@@ -1,6 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - invoke
- 
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - invoke

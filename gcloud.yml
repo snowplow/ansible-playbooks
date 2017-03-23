@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - gcloud
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - gcloud

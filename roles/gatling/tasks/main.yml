@@ -3,7 +3,7 @@
   sudo: yes
   get_url: url={{ gatling_url }} dest={{ install_dir }}
 
-- name: Extract Packer
+- name: Extract Gatling
   sudo: yes
   unarchive: copy=no src={{ install_dir }}/{{ gatling_archive }}.zip dest={{ install_dir }}
 

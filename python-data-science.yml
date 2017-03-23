@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - python-data-science
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - python-data-science

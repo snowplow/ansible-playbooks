@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - python-sphinx
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - python-sphinx

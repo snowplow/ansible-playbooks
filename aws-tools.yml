@@ -1,7 +1,7 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - aws-cli
-   - aws-emr-cli
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - aws-cli
+    - aws-emr-cli
    

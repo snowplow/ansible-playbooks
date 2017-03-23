@@ -1,5 +1,4 @@
 ---
-
 - name: Install dependencies required to deploy things with Python
   sudo: yes
   apt: pkg={{ item }} state=latest

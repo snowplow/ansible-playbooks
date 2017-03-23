@@ -1,4 +1,4 @@
 ---
 - name: Install Invoke (Python rakelike) via Pip
-  pip: name=invoke version=0.12.2
+  pip: name=invoke version={{ invoke_version }}
   sudo: yes

@@ -1,30 +1,30 @@
 ---
-  - name: Node.js | Checking installed version of node.js
-    shell: /usr/bin/test "$(node -v 2> /dev/null)" = v{{ node_version }}
-    register: wanted_version_installed
-    failed_when: wanted_version_installed.rc > 1
+- name: Node.js | Checking installed version of node.js
+  shell: /usr/bin/test "$(node -v 2> /dev/null)" = v{{ node_version }}
+  register: wanted_version_installed
+  failed_when: wanted_version_installed.rc > 1
 
-  - name: g++ | Installing g++
-    sudo: yes
-    action: apt pkg=g++
+- name: g++ | Installing g++
+  sudo: yes
+  action: apt pkg=g++
 
-  - name: Node.js | Fetching node.js source
-    action: get_url url=http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }} dest=/tmp/
-    when: wanted_version_installed.rc == 1
+- name: Node.js | Fetching node.js source
+  action: get_url url=http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }} dest=/tmp/
+  when: wanted_version_installed.rc == 1
 
-  - name: Node.js | Unpack node.js tarball
-    command: tar zxf {{ node_tarball }} chdir=/tmp
-    when: wanted_version_installed.rc == 1
+- name: Node.js | Unpack node.js tarball
+  command: tar zxf {{ node_tarball }} chdir=/tmp
+  when: wanted_version_installed.rc == 1
 
-  - name: Node.js | Configure
-    shell: /usr/bin/python ./configure --prefix={{ node_path }} chdir=/tmp/{{ node_prefix }}
-    when: wanted_version_installed.rc == 1
+- name: Node.js | Configure
+  shell: /usr/bin/python ./configure --prefix={{ node_path }} chdir=/tmp/{{ node_prefix }}
+  when: wanted_version_installed.rc == 1
 
-  - name: Node.js | Make
-    shell: /usr/bin/make chdir=/tmp/{{ node_prefix }}/
-    when: wanted_version_installed.rc == 1
+- name: Node.js | Make
+  shell: /usr/bin/make chdir=/tmp/{{ node_prefix }}/
+  when: wanted_version_installed.rc == 1
 
-  - name: Node.js | Make install
-    sudo: yes
-    shell: /usr/bin/make install chdir=/tmp/{{ node_prefix }}/
-    when: wanted_version_installed.rc == 1
+- name: Node.js | Make install
+  sudo: yes
+  shell: /usr/bin/make install chdir=/tmp/{{ node_prefix }}/
+  when: wanted_version_installed.rc == 1

@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - ruby-rvm
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - ruby-rvm

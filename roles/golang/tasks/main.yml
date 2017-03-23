@@ -1,5 +1,4 @@
 ---
-
 - name: Prepare | Get the current users name
   shell: id -u -n
   register: user_name

@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - grunt
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - grunt

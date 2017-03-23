@@ -1,7 +1,7 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - nodejs
-   - grunt
-   - oracle-java
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - nodejs
+    - grunt
+    - oracle-java
