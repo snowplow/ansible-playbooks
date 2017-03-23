@@ -14,9 +14,9 @@
   sudo: yes
   shell: "apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D"
 
-- name: Docker | Install Docker 1.9.0
+- name: Docker | Install Docker 17.03.0~ce
   sudo: yes
   shell: "{{item}}"
   with_items:
     - "apt-get update"
-    - "apt-get install -y docker-engine=1.9.0-0~trusty"
+    - "apt-get install -y docker-engine=17.03.0~ce-0~ubuntu-trusty"
