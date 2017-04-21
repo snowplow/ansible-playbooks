@@ -1,0 +1,63 @@
+---
+- name: Install packages
+  sudo: yes
+  apt: pkg={{ item }} state=latest update_cache=yes
+  with_items:
+    - ruby
+    - ruby-dev
+    - git
+    - libxml2-dev
+    - libxslt-dev
+    - g++
+    - libpq-dev
+
+- name: Clone snowplow repo
+  git: repo=git://github.com/snowplow/snowplow.git dest={{ home }}
+
+- name: Install bundler
+  sudo: yes
+  command: gem install bundler --no-ri --no-rdoc creates=/usr/local/bin/bundle
+
+- name: Run bundler
+  command: bundle install --deployment chdir={{ item }}
+  with_items:
+    - "{{ home }}/3-enrich/emr-etl-runner"
+    - "{{ home }}/4-storage/storage-loader"
+
+- name: Get emr-etl-runner version
+  ignore_errors: yes
+  command: bundle exec bin/snowplow-emr-etl-runner --version chdir={{ home }}/3-enrich/emr-etl-runner
+  register: emr_etl_runner_version
+
+- name: Get storage-loader version
+  ignore_errors: yes
+  command: bundle exec bin/snowplow-storage-loader --version chdir={{ home }}/4-storage/storage-loader
+  register: storage_loader_version
+
+- assert:
+    that:
+      - "'snowplow-emr-etl-runner 0.9.1' in emr_etl_runner_version.stdout"
+      - "'snowplow-storage-loader 0.3.2' in storage_loader_version.stdout"
+
+- name: Copy config files
+  copy: src={{ item }} dest={{ home }}
+  with_items:
+    - emr-etl-runner.yml
+    - storage-loader.yml
+
+- name: Write cron.sh
+  copy: >
+    dest={{ home }}/cron.sh
+    content="
+      cd {{ home }}/3-enrich/emr-etl-runner
+      /usr/local/bin/bundle exec bin/snowplow-emr-etl-runner --enrichments config/enrichments --config {{ home }}/emr-etl-runner.yml --skip shred
+      cd {{ home }}/4-storage/storage-loader
+      /usr/local/bin/bundle exec bin/snowplow-storage-loader --config {{ home }}/storage-loader.yml --skip analyze
+    "
+
+- name: Schedule in cron
+  cron: >
+    name=snowplow
+    hour={{ cron_hour }}
+    minute={{ cron_minute }}
+    job="sh -ex {{ home }}/cron.sh 2>&1 | /usr/bin/logger -t snowplow"

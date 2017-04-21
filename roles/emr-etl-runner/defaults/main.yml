@@ -1,0 +1,4 @@
+---
+home: /home/ubuntu/snowplow
+cron_hour: 10
+cron_minute: 0
