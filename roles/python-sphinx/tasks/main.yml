@@ -19,10 +19,9 @@
   pip: name={{ item }}
   with_items:
     - sphinx==1.4.8
-    - recommonmark
-    - sphinx-autobuild
-    - nbsphinx
-    - sphinx_rtd_theme
-    - jupyter_sphinx_theme
-    - recommonmark
-    - contentful
+    - recommonmark==0.4.0
+    - sphinx-autobuild==0.6.0
+    - nbsphinx==0.2.13
+    - sphinx_rtd_theme==0.2.4
+    - jupyter_sphinx_theme==0.0.6
+    - contentful==1.2.0
