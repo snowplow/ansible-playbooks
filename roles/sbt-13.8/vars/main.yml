@@ -1,3 +1,0 @@
----
-sbt_tarball: "sbt-{{sbt_version}}.tgz"
-sbt_download_location: "https://dl.bintray.com/sbt/native-packages/sbt/{{sbt_version}}/{{sbt_tarball}}"

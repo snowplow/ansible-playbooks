@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - scala-2.11.6
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - { role: scala, scala_version: 2.11.6 }

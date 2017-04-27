@@ -5,4 +5,3 @@
   tags: [packages]
   with_items:
     - "postgresql-client-{{ postgres_version }}"
-    

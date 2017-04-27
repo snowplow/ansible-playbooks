@@ -1,5 +1,5 @@
 ---
-- name: Install Typescript and Browserify
+- name: Install Typescript, Browserify and Uglify
   command: "{{ item }}" 
   sudo: yes
   with_items:

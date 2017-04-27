@@ -1,3 +1,4 @@
+---
 - name: Install | Ensure that lein directory exists
   file: path={{software_install_dir}}/leiningen-{{lein_version}} state=directory
   sudo: yes

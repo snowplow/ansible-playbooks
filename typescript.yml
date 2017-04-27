@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - typescript
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - typescript

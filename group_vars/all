@@ -2,9 +2,3 @@
 ansible_cache_dir: /var/cache/ansible # Need to update references to ansible cache to use this variable
 software_install_dir: /usr/local/share
 user_binaries: /usr/local/bin
-
-# EC2 related variables
-instance_type: "c3.xlarge"
-security_groups: ['demo']
-region: eu-west-1
-image: { "m3.large": "ami-f4b11183", "c3.xlarge": "ami-f4b11183"}

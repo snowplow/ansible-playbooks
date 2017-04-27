@@ -1,5 +1,4 @@
 ---
-consul_version     : "0.5.2"
 consul_archive     : "consul_{{ consul_version }}_linux_amd64"
 consul_url         : "https://releases.hashicorp.com/consul/{{consul_version}}/{{ consul_archive }}.zip"
 consul_install_dir : "/usr/local/bin"

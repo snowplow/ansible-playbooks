@@ -1,20 +1,20 @@
 # Snowplow Ansible Playbooks
 
-[Ansible] [ansible] playbooks to install common tools, including:
+[Ansible][ansible] playbooks to install common tools, including:
 
 * The JVM ecosystem
 * Ruby
 * Postgres
 
-Currently these are all used to configure Vagrant VMs (specifically [dev-environment] (https://github.com/snowplow/dev-environment)) to hack on specific parts of the Snowplow stack. Going forwards, we plan to extend the playbooks to also manage server environments at [Snowplow Analytics] [snowplow].
+Currently these are all used to configure Vagrant VMs (specifically [dev-environment](https://github.com/snowplow/dev-environment)) to hack on specific parts of the Snowplow stack. Going forwards, we plan to extend the playbooks to also manage server environments at [Snowplow Analytics][snowplow].
 
 We have tried to write each playbook in a generic way, so that this may be a useful resource if you want to set up similar development environments that are not related to Snowplow specifically.
 
 ### Repo structure
 
-Plays to install individual bundles of software e.g. Ruby / RVM, Java, Scala, SBT, Thrift, NodeJS etc. have each been bundled into separate [roles] (https://github.com/snowplow/ansible-playbooks/tree/master/roles).
+Plays to install individual bundles of software e.g. Ruby / RVM, Java, Scala, SBT, Thrift, NodeJS etc. have each been bundled into separate [roles](https://github.com/snowplow/ansible-playbooks/tree/master/roles).
 
-Those roles are then combined into larger playbooks that are saved in the project root directory. For example, the [snowplow-batch-pipeline.yml] (https://github.com/snowplow/ansible-playbooks/blob/master/snowplow-batch-pipeline.yml) runs the base, Java, Scala, SBT and Ruby / RVM roles required to enable development on the Snowplow Hadoop-based data pipeline.
+Those roles are then combined into larger playbooks that are saved in the project root directory. For example, the [snowplow-batch-pipeline.yml](https://github.com/snowplow/ansible-playbooks/blob/master/snowplow-batch-pipeline.yml) runs the base, Java, Scala, SBT and Ruby / RVM roles required to enable development on the Snowplow Hadoop-based data pipeline.
 
 This structure makes it simple to compose new playbooks out of the roles. For example, to create a playbook that installs Ruby / RVM and PostgreSQL, we'd create a new playbook file e.g. `ruby-postgres.yml` with the following contents:
 
@@ -55,7 +55,7 @@ If instead you'd like to install Postgres 9.3, simply execute:
 ansible-playbook /vagrant/ansible-playbooks/postgres.yml -i /vagrant/home/ansible/ansible_hosts --connection=local --extra-vars "postgres_version=9.3"
 ```
 
-For more information on roles in Ansible playbooks, consult the [Ansible documentation] [ansible-roles-documentation]
+For more information on roles in Ansible playbooks, consult the [Ansible documentation][ansible-roles-documentation]
 
 ## Running the playbooks against a remote server (e.g. on EC2)
 
@@ -110,7 +110,7 @@ Assign that user a password. On your host machine, you'll then be able to log in
 
 Snowplow Ansible Playbooks is copyright 2014-2017 Snowplow Analytics Ltd.
 
-Licensed under the [Apache License, Version 2.0] [license] (the "License");
+Licensed under the [Apache License, Version 2.0][license] (the "License");
 you may not use this software except in compliance with the License.
 
 Unless required by applicable law or agreed to in writing, software
@@ -122,6 +122,4 @@ limitations under the License.
 [ansible]: https://www.ansible.com/
 [ansible-roles-documentation]: http://docs.ansible.com/playbooks_roles.html
 [snowplow]: http://snowplowanalytics.com
-
-
 [license]: http://www.apache.org/licenses/LICENSE-2.0

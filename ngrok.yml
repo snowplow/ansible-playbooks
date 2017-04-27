@@ -1,5 +1,5 @@
 ---
- - hosts: vagrant
-   remote_user: vagrant
-   roles:
-   - ngrok
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - ngrok

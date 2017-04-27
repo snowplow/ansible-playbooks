@@ -1,5 +1,4 @@
 ---
-
 - name: Download Gradle {{gradle_version}}
   get_url: dest="{{ ansible_cache_dir }}" url=https://services.gradle.org/distributions/{{gradle_zipfile}}
   sudo: yes
