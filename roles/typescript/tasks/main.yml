@@ -3,7 +3,7 @@
   command: "{{ item }}" 
   sudo: yes
   with_items:
-    - "npm install -g typescript@1.8.9"
+    - "npm install -g typescript@2.3.2"
     - "npm install -g tsd@0.6.5"
     - "npm install -g browserify@13.0.0"
     - "npm install -g uglify-js@2.6.2"
