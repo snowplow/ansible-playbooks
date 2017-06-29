@@ -1,30 +1,41 @@
 ---
-- name: Node.js | Checking installed version of node.js
-  shell: /usr/bin/test "$(node -v 2> /dev/null)" = v{{ node_version }}
-  register: wanted_version_installed
-  failed_when: wanted_version_installed.rc > 1
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
 
-- name: g++ | Installing g++
-  sudo: yes
-  action: apt pkg=g++
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
 
-- name: Node.js | Fetching node.js source
-  action: get_url url=http://nodejs.org/dist/v{{ node_version }}/{{ node_tarball }} dest=/tmp/
-  when: wanted_version_installed.rc == 1
+- name: Define nodejs_install_npm_user
+  set_fact:
+    nodejs_install_npm_user: "{{ ansible_user | default(lookup('env', 'USER')) }}"
+  when: nodejs_install_npm_user is not defined
 
-- name: Node.js | Unpack node.js tarball
-  command: tar zxf {{ node_tarball }} chdir=/tmp
-  when: wanted_version_installed.rc == 1
+- name: Create npm global directory
+  file:
+    path: "{{ npm_config_prefix }}"
+    owner: "{{ nodejs_install_npm_user }}"
+    group: "{{ nodejs_install_npm_user }}"
+    state: directory
 
-- name: Node.js | Configure
-  shell: /usr/bin/python ./configure --prefix={{ node_path }} chdir=/tmp/{{ node_prefix }}
-  when: wanted_version_installed.rc == 1
+- name: Add npm_config_prefix bin directory to global $PATH.
+  template:
+    src: npm.sh.j2
+    dest: /etc/profile.d/npm.sh
+    mode: 0644
 
-- name: Node.js | Make
-  shell: /usr/bin/make chdir=/tmp/{{ node_prefix }}/
-  when: wanted_version_installed.rc == 1
+- name: Ensure npm global packages are installed.
+  npm:
+    name: "{{ item.name | default(item) }}"
+    version: "{{ item.version | default('latest') }}"
+    global: yes
+    state: latest
+  environment:
+    NPM_CONFIG_PREFIX: "{{ npm_config_prefix }}"
+    NODE_PATH: "{{ npm_config_prefix }}/lib/node_modules"
+    NPM_CONFIG_UNSAFE_PERM: "{{ npm_config_unsafe_perm }}"
+  with_items: "{{ nodejs_npm_global_packages }}"
 
-- name: Node.js | Make install
-  sudo: yes
-  shell: /usr/bin/make install chdir=/tmp/{{ node_prefix }}/
-  when: wanted_version_installed.rc == 1
+- name: Install packages defined in a given package.json.
+  npm:
+    path: "{{ nodejs_package_json_path }}"
+  when: nodejs_package_json_path is defined and nodejs_package_json_path
