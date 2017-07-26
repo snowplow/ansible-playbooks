@@ -4,7 +4,6 @@
   sudo: yes
 
 - name: Install Bundler
-  # gem: name=bundler state=present
   command: gem install bundler
   sudo: yes 
 

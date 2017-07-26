@@ -9,14 +9,8 @@
   sudo: yes
   vars:
     rvm1_rubies:
-      - 'ruby-2.0.0'
+      - 'ruby-2.2.2'
     rvm1_rvm_version: 'stable'
     rvm1_rvm_check_for_updates: True
   roles:
     - rvm_io.rvm1-ruby
-
-- hosts: vagrant
-  remote_user: vagrant
-  sudo: yes
-  roles:
-    - github-pages
