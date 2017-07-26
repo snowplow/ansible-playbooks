@@ -1,0 +1,8 @@
+---
+- name: Install Bundler
+  command: gem install bundler
+  sudo: yes 
+
+- name: Install bundle dependencies in project folder
+  shell: /usr/local/rvm/gems/ruby-{{ ruby_version }}/wrappers/bundle install chdir=/vagrant
+  sudo: yes

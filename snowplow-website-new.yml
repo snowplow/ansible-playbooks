@@ -14,3 +14,11 @@
     rvm1_rvm_check_for_updates: True
   roles:
     - rvm_io.rvm1-ruby
+
+- hosts: vagrant
+  remote_user: vagrant
+  sudo: yes
+  vars:
+    ruby_version: "2.2.2"
+  roles:
+    - bundler
