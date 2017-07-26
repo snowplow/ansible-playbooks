@@ -9,7 +9,7 @@
   sudo: yes
   vars:
     rvm1_rubies:
-      - 'ruby-2.0.0'
+      - 'ruby-2.2.2'
     rvm1_rvm_version: 'stable'
     rvm1_rvm_check_for_updates: True
   roles:
@@ -18,5 +18,7 @@
 - hosts: vagrant
   remote_user: vagrant
   sudo: yes
+  vars:
+    ruby_version: "2.2.2"
   roles:
-    - github-pages
+    - bundler
