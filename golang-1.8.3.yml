@@ -1,0 +1,5 @@
+---
+- hosts: vagrant
+  remote_user: vagrant
+  roles:
+    - { role: golang, golang_version: 1.8.3 }
