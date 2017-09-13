@@ -15,6 +15,5 @@ rvm1_symlink_binaries:
   - 'rdoc'
   - 'ri'
   - 'ruby'
-  - 'testrb'
 
 rvm1_symlink_to: '/usr/local/bin'
