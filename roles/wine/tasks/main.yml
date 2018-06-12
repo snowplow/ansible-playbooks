@@ -4,6 +4,8 @@
   sudo: yes
   with_items:
     - "dpkg --add-architecture i386"
-    - "add-apt-repository ppa:ubuntu-wine/ppa"
+    - "wget -nc https://dl.winehq.org/wine-builds/Release.key"
+    - "apt-key add Release.key"
+    - "apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/"
     - "apt-get update"
-    - "apt-get install -y wine1.7"
+    - "apt-get install -y winehq-stable"
