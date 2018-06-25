@@ -1,0 +1,21 @@
+---
+
+- name: "Go-Lang | Ensure bootstrap directory is writable"
+  file:
+    path: "{{ GOROOT_BOOTSTRAP }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+
+- name: "Go-Lang | Get bootstrap distribution"
+  git:
+    repo: "https://github.com/golang/go.git"
+    dest: "{{ GOROOT_BOOTSTRAP }}"
+    version: "release-branch.go1.4"
+    clone: yes
+    update: no
+
+- name: "Go-Lang | Building Bootstrapper"
+  shell: "cd {{ GOROOT_BOOTSTRAP }}/src && ./{{ go_build_script }}"
+  environment:
+    GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"

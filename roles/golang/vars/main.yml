@@ -1,8 +1,0 @@
----
-golang_tarball: "go{{golang_version}}.linux-amd64.tar.gz"
-golang_download_location: "http://golang.org/dl/{{golang_tarball}}"
-golang_version_string: "go version go{{golang_version}} linux/amd64"
-golang_env:
-  GOPATH: "{{golang_gopath}}"
-  GOROOT: "{{software_install_dir}}/go"
-  PATH: "{{software_install_dir}}/go/bin:{{ansible_env.PATH}}"

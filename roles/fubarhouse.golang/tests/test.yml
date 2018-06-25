@@ -1,0 +1,38 @@
+---
+
+- hosts: all
+  sudo: true
+
+  vars:
+    go_version: 1.9
+    build_go_from_source: true
+    install_go_bootstrap: true
+    go_temporary_dir: /home/travis/temp
+    GOROOT: /home/travis/goroot1.9
+    GOPATH: /home/travis/gopath
+    GOROOT_BOOTSTRAP: /home/travis/goroot1.4
+
+  pre_tasks:
+    - file:
+        path: /home/travis/temp
+        state: directory
+        mode: 0777
+
+    - name: Update yum cache.
+      yum:
+        update_cache: yes
+        state: latest
+      changed_when: false
+      when: ansible_os_family == 'RedHat'
+      failed_when: false
+
+    - name: Update apt cache.
+      apt:
+        update_cache: yes
+        cache_valid_time: 600
+      changed_when: false
+      when: ansible_os_family == 'Debian'
+      failed_when: false
+
+  roles:
+    - role_under_test

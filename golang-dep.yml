@@ -1,0 +1,10 @@
+---
+- hosts: vagrant
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  roles:
+    - role: golang-dep
+  vars:
+    GOPATH: /opt/gopath
+    GOROOT: /usr/local/share/go

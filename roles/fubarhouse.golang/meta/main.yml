@@ -1,0 +1,48 @@
+galaxy_info:
+  author: Karl Hepworth
+  description: Installs the Go programming language from distribution, or build from source, and install desired packages to your Golang workspace!
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: Debian
+      versions:
+        - wheezy
+        - jessie
+        - stretch
+        - buster
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 24
+        - 25
+        - 26
+        - 27
+        - 28
+    - name: Ubuntu
+      versions:
+        - precise
+        - quantal
+        - raring
+        - saucy
+        - trusty
+        - utopic
+        - wily
+        - vivid
+        - xenial
+        - yakkety
+        - zesty
+        - artful
+        - bionic
+        - cuttlefish
+  galaxy_tags:
+    - go
+    - development
+    - programming
+    - language
+    - compiler
+    - package
+    - manager
+dependencies: []

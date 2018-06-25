@@ -1,0 +1,24 @@
+---
+# tasks file for golang-dep
+
+- name: Dep | Ensure download path exists.
+  become: yes
+  become_method: sudo
+  file:
+    path: /tmp/dep
+    recurse: yes
+    state: directory
+
+- name: Dep | Download install script.
+  become: yes
+  become_method: sudo
+  get_url:
+    url: https://raw.githubusercontent.com/golang/dep/master/install.sh
+    dest: /tmp/dep/install.sh
+
+- name: Install dep.
+  become: yes
+  become_method: sudo
+  command: sh /tmp/dep/install.sh
+  environment:
+    INSTALL_DIRECTORY: "{{ GOPATH }}/bin"

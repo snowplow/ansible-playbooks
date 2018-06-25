@@ -1,0 +1,138 @@
+---
+
+python:
+  - 2.7
+
+services: docker
+
+env:
+
+  # Source installation tests.
+  - distro: precise
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: quantal
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: raring
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: saucy
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: trusty
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: utopic
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: vivid
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: wily
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: xenial
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: yakkety
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: zesty
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: artful
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: bionic
+    init: /sbin/init
+    run_opts: --privileged
+    playbook: test.yml
+  - distro: centos-6
+    init: /sbin/init
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: centos-7
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: wheezy
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: jessie
+    init: /lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: stretch
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: buster
+    init: /bin/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-24
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-25
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-26
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-27
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+  - distro: fedora-28
+    init: /usr/lib/systemd/systemd
+    run_opts: --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro
+    playbook: test.yml
+
+before_install:
+
+  # Pull container.
+  - 'docker pull fubarhouse/docker-ansible:${distro}'
+
+script:
+
+  - container_id=$(mktemp)
+
+  # Run container in detached state.
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} fubarhouse/docker-ansible:${distro} "${init}" > "${container_id}"'
+
+  # Ansible syntax check.
+  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --syntax-check'
+
+  # Test role.
+  - 'travis_wait 30 docker exec "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo'
+
+  - idempotence=$(mktemp)
+  - >
+    docker exec "$(cat ${container_id})"
+    ansible-playbook /etc/ansible/roles/role_under_test/tests/${playbook} --sudo -vvvv
+    | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

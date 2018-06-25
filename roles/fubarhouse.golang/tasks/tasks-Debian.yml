@@ -1,0 +1,24 @@
+---
+
+- name: "Go-Lang | Install dependencies"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - gcc
+    - git
+    - findutils
+    - make
+    - rsync
+    - tar
+
+- name: "Go-Lang | Define GOARCH"
+  set_fact:
+    GOARCH: "amd64"
+  when: GOARCH is not defined
+
+- name: "Go-Lang | Define GOOS"
+  set_fact:
+    GOOS: "linux"
+  when: GOOS is not defined

@@ -1,0 +1,38 @@
+---
+
+- name: "Go-Lang | Download distribution"
+  get_url:
+    url: "{{ go_custom_mirror }}/{{ go_distribution_filename }}.tar.gz"
+    dest: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    checksum: "{{ go_checksum | default('') }}"
+    validate_certs: no
+
+- name: "Go-Lang | Empty destination directory"
+  file:
+    path: "{{ GOROOT }}"
+    state: absent
+
+- name: "Go-Lang | Ensure directory is writable"
+  file:
+    path: "{{ GOROOT }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+    recurse: true
+
+- name: "Go-Lang | Unpack distribution"
+  unarchive:
+    src: "{{ go_temporary_dir }}/{{ go_distribution_filename }}.tar.gz"
+    dest: "{{ go_temporary_dir }}"
+    copy: "no"
+
+- name: "Go-Lang | Removing existing installation"
+  shell: "rm -rf {{ GOROOT }}/*"
+
+- name: "Go-Lang | Moving to installation directory"
+  shell: "cp -rf {{ go_temporary_dir }}/go/* {{ GOROOT }}/"
+
+- name: "Go-Lang | Remove temporary data"
+  file:
+    path: "{{ go_temporary_dir }}/go/"
+    state: absent

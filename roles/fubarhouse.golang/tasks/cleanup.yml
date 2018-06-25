@@ -1,0 +1,35 @@
+---
+
+- name: "Go-Lang | Removing GOROOT"
+  file:
+    path: "{{ GOROOT }}"
+    state: absent
+  failed_when: false
+
+- name: "Go-Lang | Removing GOPATH"
+  file:
+    path: "{{ GOPATH }}"
+    state: absent
+  failed_when: false
+
+- name: "Go-Lang | Removing GOBOOTSTRAP"
+  file:
+    path: "{{ GOROOT_BOOTSTRAP }}"
+    state: absent
+  when:
+   - GOROOT_BOOTSTRAP is defined
+   - install_go_bootstrap|bool == true
+  failed_when: false
+
+- name: "Go-Lang | Ensure shell profiles are clean"
+  lineinfile:
+    dest: "{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: absent
+  with_nested:
+  - "{{ golang_shell_profile }}"
+  - "{{ shell_exports }}"
+  when:
+  - golang_shell_profile is defined
+  - shell_exports is defined

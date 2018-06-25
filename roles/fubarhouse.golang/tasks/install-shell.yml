@@ -1,0 +1,28 @@
+---
+
+- name: "Go_Lang | Identify if configured shell profile exists"
+  stat:
+    path: "{{ golang_shell_profile }}"
+  register: golang_shell_profile_stat
+  when: golang_shell_profile is defined
+
+- name: "Go-Lang | Ensure shell profiles are configured"
+  lineinfile:
+    dest: "{{ item[0] }}"
+    regexp: "{{ item[1].regex }}"
+    line: "{{ item[1].lineinfile }}"
+    state: present
+  with_nested:
+  - "{{ golang_shell_profile }}"
+  - "{{ shell_exports }}"
+  when:
+    - golang_shell_profile is defined
+    - golang_shell_profile_stat.stat.exists|bool == true
+
+- name: "Go-Lang | Restart shell"
+  shell: "{{ golang_shell_profile }}"
+  failed_when: false
+  when:
+    - golang_shell_profile is defined
+    - golang_shell_profile_stat.stat.exists|bool == true
+

@@ -1,0 +1,27 @@
+---
+
+- name: "Go-Lang | Define list of package directories"
+  set_fact:
+    go_package_locations:
+    - "{{ GOPATH }}/bin"
+    - "{{ GOPATH }}/pkg"
+    - "{{ GOPATH }}/src"
+  when: go_reget|bool == true
+
+- name: "Go-Lang | Remove installed workspace packages"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items: "{{ go_package_locations }}"
+  ignore_errors: yes
+  when:
+    - go_reget|bool == true
+    - go_package_locations is defined
+
+- name: "Go-Lang | Run get commands"
+  shell: "{{ GOROOT }}/bin/go get -u {{ item.url }}"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+  with_items: "{{ go_get }}"
+  changed_when: false
