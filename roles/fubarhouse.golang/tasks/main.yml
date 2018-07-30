@@ -1,0 +1,34 @@
+---
+# main tasks file for fubarhouse-golang
+
+- name: "Include tasks gathering system information"
+  include_tasks: setup.yml
+
+- name: "Include tasks to clean installation"
+  include_tasks: cleanup.yml
+  when: go_install_clean|bool == true
+
+- name: "Include tasks for installation"
+  include_tasks: install.yml
+  when: ((current_go_version is not defined) or
+        (expected_go_version_output|string not in current_go_version.stdout|default('')) or
+        (go_install_clean|bool == true)) and
+        (go_uninstall|bool == false)
+
+- name: "Include tasks for Go Get"
+  include_tasks: go-get.yml
+  when: (go_get.0 is defined) and
+        (go_uninstall|bool == false)
+
+- name: "Include tasks for Go Install"
+  include_tasks: go-install.yml
+  when: (go_install.0 is defined) and
+        (go_uninstall|bool == false)
+
+- name: "Include tasks for setting Go permissions"
+  include_tasks: perm.yml
+  when: go_uninstall|bool == false
+
+- name: "Include tasks for shell installation"
+  include_tasks: install-shell.yml
+  when: golang_shell_profile is defined

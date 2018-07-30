@@ -1,0 +1,11 @@
+---
+
+- name: "Go-Lang | Define GOARCH"
+  set_fact:
+    GOARCH: "amd64"
+  when: GOARCH is not defined
+
+- name: "Go-Lang | Define GOOS"
+  set_fact:
+    GOOS: "freebsd"
+  when: GOOS is not defined

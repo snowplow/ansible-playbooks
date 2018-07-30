@@ -1,0 +1,20 @@
+---
+
+- name: "Go-Lang | Clone packages"
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ GOPATH }}/src/{{ item.dest }}"
+    version: "{{ item.version }}"
+    clone: yes
+    update: yes
+    force: yes
+  with_items: "{{ go_install }}"
+  changed_when: false
+
+- name: "Go-Lang | Install packages"
+  shell: "{{ GOROOT }}/bin/go install {{ item.dest }}/..."
+  environment:
+    GOROOT: "{{ GOROOT }}"
+    GOPATH: "{{ GOPATH }}"
+  with_items: "{{ go_install }}"
+  changed_when: false

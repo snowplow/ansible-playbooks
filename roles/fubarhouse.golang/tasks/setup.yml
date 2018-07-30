@@ -1,0 +1,122 @@
+---
+
+- name: "Go-Lang | Define user variable for ssh use"
+  set_fact:
+    fubarhouse_user: "{{ ansible_ssh_user }}"
+  when: ansible_ssh_user is defined and fubarhouse_user is not defined
+
+- name: "Go-Lang | Define user variable for non-ssh use"
+  set_fact:
+    fubarhouse_user: "{{ ansible_user_id }}"
+  when: ansible_ssh_user is not defined and fubarhouse_user is not defined
+
+- name: "Go-Lang | Get $HOME"
+  shell: "echo $HOME"
+  register: shell_home_dir
+  changed_when: false
+  when: fubarhouse_user_dir is not defined
+
+- name: "Go-Lang | Set $HOME"
+  set_fact:
+    fubarhouse_user_dir: "{{ shell_home_dir.stdout }}"
+  when: fubarhouse_user_dir is not defined
+
+- name: "Go-Lang | Include OS-Specific tasks (CentOS)"
+  include_tasks: tasks-CentOS.yml
+  when: ansible_distribution == "CentOS"
+
+- name: "Go-Lang | Include OS-Specific tasks (Darwin)"
+  include_tasks: tasks-Darwin.yml
+  when: ansible_os_family == 'Darwin'
+
+- name: "Go-Lang | Include OS-Specific tasks (Debian)"
+  include_tasks: tasks-Debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: "Go-Lang | Include OS-Specific tasks (FreeBSD)"
+  include_tasks: tasks-Debian.yml
+  when: ansible_distribution == 'FreeBSD'
+
+- name: "Go-Lang | Include OS-Specific tasks (RedHat)"
+  include_tasks: tasks-RedHat.yml
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "CentOS"
+
+- name: "Go-Lang | Define GOROOT"
+  set_fact:
+    GOROOT: /usr/local/go
+  when: GOROOT is not defined
+
+- name: "Go-Lang | Define GOPATH"
+  set_fact:
+    GOPATH: "{{ fubarhouse_user_dir }}/go"
+  when:
+    - GOROOT is defined
+    - GOPATH is not defined
+
+- name: "Go-Lang | Define shell exports"
+  set_fact:
+    shell_exports:
+      - regex: "export GOROOT"
+        lineinfile: "export GOROOT={{ GOROOT }}"
+      - regex: "export GOPATH"
+        lineinfile: "export GOPATH={{ GOPATH }}"
+      - regex: "PATH:{{ GOROOT }}/bin"
+        lineinfile: "export PATH=$PATH:{{ GOROOT }}/bin"
+      - regex: "PATH:{{ GOPATH }}/bin"
+        lineinfile: "export PATH=$PATH:{{ GOPATH }}/bin"
+  when:
+    - golang_shell_profile is defined
+    - shell_exports is not defined
+
+- name: "Go-Lang | Define GOROOT_BOOTSTRAP"
+  set_fact:
+    GOROOT_BOOTSTRAP: /usr/local/go1.4
+  when:
+   - fubarhouse_user_dir is defined
+   - GOROOT_BOOTSTRAP is not defined
+   - build_go_from_source|bool == true
+
+- name: "Go-Lang | Define version comparrison string"
+  set_fact:
+    go_version_string: "go{{ go_version }}"
+  changed_when: false
+
+- name: "Go-Lang | Looking for compiled binary in GOROOT_BOOTSTRAP installation"
+  stat:
+    path: "{{ GOROOT_BOOTSTRAP }}/bin/go"
+  register: go_binary_bootstrap
+  failed_when: false
+  when:
+   - GOROOT_BOOTSTRAP is defined
+   - build_go_from_source|bool == true
+
+- name: "Go-Lang | Define URL for distribution"
+  set_fact:
+    go_distribution_filename: "go{{ go_version }}.{{ GOOS }}-{{ GOARCH }}"
+  when: build_go_from_source|bool == false
+
+- name: "Go-Lang | Define URL for source"
+  set_fact:
+    go_distribution_filename: "go{{ go_version }}.src"
+  when: build_go_from_source|bool == true
+
+- name: "Go-Lang | Looking for existing installation"
+  stat:
+    path: "{{ GOROOT }}/bin/go"
+  register: go_binary
+  failed_when: false
+
+- name: "Go-Lang | Getting version information"
+  shell: "{{ GOROOT }}/bin/go version | cat"
+  environment:
+    GOPATH: "{{ GOPATH }}"
+    GOROOT: "{{ GOROOT }}"
+  register: current_go_version
+  changed_when: false
+
+- name: "Go-Lang | Define expected version output"
+  set_fact:
+    expected_go_version_output: "go version {{ go_version_string }} {{ GOOS }}/{{ GOARCH }}"
+  when: expected_go_version_output is not defined

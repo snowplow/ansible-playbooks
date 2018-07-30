@@ -2,4 +2,12 @@
 - hosts: vagrant
   remote_user: vagrant
   roles:
-    - { role: golang, golang_version: 1.7.4 }
+    - role: fubarhouse.golang
+      become: yes
+      become_method: sudo
+      go_version: 1.10.3
+      GOPATH: /opt/gopath
+      GOROOT: /usr/local/share/go
+      golang_shell_profile:
+        - /root/.profile
+        - /home/vagrant/.profile

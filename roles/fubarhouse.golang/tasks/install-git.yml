@@ -1,0 +1,29 @@
+---
+
+- name: "Go-Lang | Ensure directory is absent"
+  file:
+    path: "{{ GOROOT }}"
+    state: absent
+
+- name: "Go-Lang | Ensure directory is empty"
+  file:
+    path: "{{ GOROOT }}"
+    state: directory
+    owner: "{{ fubarhouse_user }}"
+    mode: 0775
+
+- name: "Go-Lang | Clone distribution"
+  git:
+    repo: "https://github.com/golang/go.git"
+    dest: "{{ GOROOT }}"
+    version: "{{ go_version_string }}"
+    clone: yes
+    update: no
+    force: yes
+
+- name: "Go-Lang | Build from source"
+  shell: "cd {{ GOROOT }}/src && ./{{ go_build_script }}"
+  environment:
+    GOROOT: "{{ GOROOT }}"
+    GOPATH: "{{ GOPATH }}"
+    GOROOT_BOOTSTRAP: "{{ GOROOT_BOOTSTRAP }}"

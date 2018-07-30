@@ -1,0 +1,24 @@
+---
+# defaults file for fubarhouse-golang
+
+# Go
+go_reget: false
+go_install_clean: false
+go_version: 1.10.3
+go_uninstall: false
+go_custom_mirror: https://storage.googleapis.com/golang
+go_temporary_dir: /tmp
+mode_codebase: 0755
+mode_workspace: 0755
+
+build_go_from_source: false
+install_go_bootstrap: false
+go_build_script: make.bash
+
+# Go get
+go_get:
+- name: dep
+  url: github.com/golang/dep/cmd/dep
+- name: vgo
+  url: golang.org/x/vgo
+go_install: []
