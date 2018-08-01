@@ -12,9 +12,14 @@
   ignore_errors: yes
   register: go_version
 
+- name: Check that the golang tar exists
+  stat:
+    path: "{{ansible_cache_dir}}/{{golang_tarball}}"
+  register: golang_tar
+
 - name: Install | Download the Go tarball
-  get_url: url={{golang_download_location}}
-           dest={{ansible_cache_dir}}
+  command: wget {{golang_download_location}} -P {{ansible_cache_dir}}
+  when: golang_tar.stat.exists == False
   sudo: yes
 
 - name: Install | Extract the Go tarball if Go is not yet installed or if it is not the desired version
