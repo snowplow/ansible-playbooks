@@ -2,4 +2,4 @@
 - hosts: vagrant
   remote_user: vagrant
   roles:
-    - { role: oracle-java } # Note: oracle-java v8 installed by default (no need to specify)
+    - { role: oracle-java, oracle_java_version: 8} # Note: oracle-java v8 installed by default (no need to specify)
