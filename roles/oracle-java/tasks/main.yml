@@ -7,25 +7,26 @@
     - ant
     - maven
 
-- name: Install Oracle Java Repo Installer Repository
+- name: Install Oracle Java 8 Repo Installer Repository
   apt_repository: repo=ppa:webupd8team/java update-cache=yes 
+  when: oracle_java_version == 8
+  sudo: yes
+
+- name: Install Oracle Java 10 Repo Installer Repository
+  apt_repository: repo=ppa:linuxuprising/java
+  when: oracle_java_version == 10
   sudo: yes
 
 - name: Wizardry to bypass the Oracle License File prompt
   shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
   sudo: yes
 
-- name: Install Oracle Java 6
-  apt: pkg=oracle-java6-installer
-  when: oracle_java_version == 6
-  sudo: yes
-
-- name: Install Oracle Java 7
-  apt: pkg=oracle-java7-installer
-  when: oracle_java_version == 7
-  sudo: yes
-
 - name: Install Oracle Java 8
   apt: pkg=oracle-java8-installer
   when: oracle_java_version == 8
+  sudo: yes
+
+- name: Install Oracle Java 10
+  apt: pkg=oracle-java10-installer
+  when: oracle_java_version == 10
   sudo: yes
