@@ -22,7 +22,11 @@
   sudo: yes
 
 - name: Install Oracle Java 8
-  apt: pkg=oracle-java8-installer
+  apt: name={{item}} state=latest
+  with_items:
+    - oracle-java-8-installer
+    - ca-certificates
+    - oracle-java-set-default
   when: oracle_java_version == 8
   sudo: yes
 
