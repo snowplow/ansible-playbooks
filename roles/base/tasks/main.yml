@@ -32,7 +32,7 @@
 
 - name: Add Google DNS nameserver
   lineinfile:
-    dest="/etc/resolvconf/resolv.conf.d/base"
+    dest="/etc/resolv.conf"
     line="nameserver 8.8.8.8"
   sudo: yes
 
