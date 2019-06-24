@@ -17,23 +17,23 @@
   shell: mkdir /var/local/ansible-cache creates=/var/local/ansible-cache
   sudo: yes
 
-# Install Python 3.3
-- name: Download Python 3.3
-  get_url: dest=/var/local/ansible-cache url=http://www.python.org/ftp/python/3.3.5/Python-3.3.5.tar.xz 
+# Install Python 3.5
+- name: Download Python 3.5
+  get_url: dest=/var/local/ansible-cache url=https://www.python.org/ftp/python/3.5.4/Python-3.5.4.tar.xz
   sudo: yes
 
-- name: Ensure Python 3.3 is extracted
-  shell: chdir=/var/local/ansible-cache tar xJf ./Python-3.3.5.tar.xz -C /opt creates=/opt/Python-3.3.5
+- name: Ensure Python 3.5 is extracted
+  shell: chdir=/var/local/ansible-cache tar xJf ./Python-3.5.4.tar.xz -C /opt creates=/opt/Python-3.5.4
   sudo: yes
 
-- name: Ensure Python 3.3 is configured
-  shell: chdir=/opt/Python-3.3.5 ./configure --prefix=/opt/python3.3
+- name: Ensure Python 3.5 is configured
+  shell: chdir=/opt/Python-3.5.4 ./configure --prefix=/opt/python3.5
 
-- name: Ensure Python 3.3 make'd
-  shell: chdir=/opt/Python-3.3.5 make
+- name: Ensure Python 3.5 make'd
+  shell: chdir=/opt/Python-3.5.4 make
 
-- name: Ensure Python 3.3 installed
-  shell: chdir=/opt/Python-3.3.5 make install  # Need to add a 'creates=' flag here
+- name: Ensure Python 3.5 installed
+  shell: chdir=/opt/Python-3.5.4 make install  # Need to add a 'creates=' flag here
   sudo: yes
 
 # Install Python 2.7
@@ -60,20 +60,20 @@
   shell: ssh-keyscan -H github.com >> /home/vagrant/.ssh/known_hosts 
   sudo: yes
 
-# Setup a Python 3.3 virtual environment to run the tracker
-- name: Setup an environment for the tracker using Python 3.3
-  shell: virtualenv -p /opt/python3.3/bin/python3.3 ~/snowplow-python-3.3-tracker-environment
+# Setup a Python 3.5 virtual environment to run the tracker
+- name: Setup an environment for the tracker using Python 3.5
+  shell: virtualenv -p /opt/python3.5/bin/python3.5 ~/snowplow-python-3.5-tracker-environment
 
-- name: Install packages required for the Python Tracker in the Python 3.3 environment
-  pip: name={{ item }} virtualenv="~/snowplow-python-3.3-tracker-environment"
+- name: Install packages required for the Python Tracker in the Python 3.5 environment
+  pip: name={{ item }} virtualenv="~/snowplow-python-3.5-tracker-environment"
   with_items: 
     - python-dateutil
     - httmock
     - freezegun
     - pytest
 
-- name: Install the packages specified in requirements.txt in the Python 3.3 environment
-  pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-3.3-tracker-environment
+- name: Install the packages specified in requirements.txt in the Python 3.5 environment
+  pip: requirements=/vagrant/requirements-test.txt virtualenv=~/snowplow-python-3.5-tracker-environment
 
 # Setup a Python 2.7 virtual environment to run the tracker
 - name: Setup an environment for the tracker using Python 2.7
@@ -88,4 +88,4 @@
     - pytest
 
 - name: Install the packages specified in requirements.txt in the Python 2.7 environment
-  pip: requirements=/vagrant/requirements.txt virtualenv=~/snowplow-python-2.7-tracker-environment
+  pip: requirements=/vagrant/requirements-test.txt virtualenv=~/snowplow-python-2.7-tracker-environment
