@@ -1,3 +1,4 @@
 ---
 postgres_version: 9.4
 install_postgres_server: true
+distro: "precise"
