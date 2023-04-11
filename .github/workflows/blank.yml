@@ -1,0 +1,21 @@
+name: Test
+on:
+  pull_request:
+    branches: 
+      - main
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+      
+      # intermediary steps to run tests
+
+      - run: npx test-results-reporter publish -c path/to/report.json
+        if: ${{ always() }}
+        env:
+          SLACK_URL: ${{ secrets.SLACK_URL }}
